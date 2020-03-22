@@ -10,7 +10,7 @@ org.clojars.fctorial/parse-struct   {:mvn/version "0.6.0"}
 
 ## Usage:
 
-```
+```clojure
 (ns examples
   (:require [parse_struct.core :refer [serialize deserialize type-size]]
             [parse_struct.common-types :as ct]))
