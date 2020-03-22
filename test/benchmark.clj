@@ -1,14 +1,14 @@
 (ns benchmark
   (:require [parse_struct.core :refer [serialize deserialize]]
-            [roundtrip_test :refer [gen-struct-val]]))
+            [parse_struct.common-types :refer :all]
+            [struct-generator :refer [gen-struct-val gen-rand-spec]]
+            [criterium.core :as cr]))
 
 (defn -main []
-  (let [spec (read-string (slurp (str "test/big_spec.edn")))
+  (let [spec (gen-rand-spec {:max-depth           2
+                             :max-array-len       5
+                             :max-struct-children 5})
         value (gen-struct-val spec)]
-    (println "warming up")
-    (doseq [i (range 1 4)]
-      (println i)
-      (count (deserialize spec (serialize spec value))))
-    (println "done")
-    (time (= (deserialize spec (serialize spec value))
-             (seq value)))))
+    (cr/with-progress-reporting (cr/quick-bench (= (deserialize spec (serialize spec value))
+                                                   (seq value))
+                                                :verbose))))
