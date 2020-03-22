@@ -5,10 +5,10 @@
             [criterium.core :as cr]))
 
 (defn -main []
-  (let [spec (gen-rand-spec {:max-depth           2
-                             :max-array-len       5
-                             :max-struct-children 5})
+  (let [spec (read-string (slurp "test/small_spec.edn"))
         value (gen-struct-val spec)]
     (cr/with-progress-reporting (cr/quick-bench (= (deserialize spec (serialize spec value))
-                                                   (seq value))
+                                                   (if (seqable? value)
+                                                     (seq value)
+                                                     value))
                                                 :verbose))))

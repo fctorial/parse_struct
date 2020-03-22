@@ -1,0 +1,10 @@
+{:type :struct,
+ :definition
+ (["868kqezcb4"
+   {:type :struct,
+    :definition
+    (["in1rpp9mi0" {:type :int, :bytes 2, :signed false}]
+     ["3gdh3h2gqg" {:type :int, :bytes 8, :signed true}]
+     ["aneyosb93z" {:type :int, :bytes 1, :signed true}]
+     ["oy5iqicky8" {:type :int, :bytes 1, :signed false}])}]
+  ["i7ivcwpzev" {:type :string, :bytes 2, :trim_nulls false}])}
