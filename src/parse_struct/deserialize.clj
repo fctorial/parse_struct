@@ -4,8 +4,13 @@
             [clojure.spec.alpha :as s])
   (:import (java.nio ByteBuffer ByteOrder)))
 
-(defmacro make-int-parser [bits signed?]
-  (let [bc (/ bits 8)
+(defmulti int-parser (fn [spec _] spec))
+
+(defmacro make-int-parser [_spec]
+  (let [spec (var-get (resolve _spec))
+        bc (spec :bytes)
+        signed? (spec :signed)
+        bits (* bc 8)
         getter ({8  '.get
                  16 '.getShort
                  32 '.getInt
@@ -18,22 +23,28 @@
                            num-var
                            `(if (neg? ~num-var)
                               (+ ~num-var ~offset)
-                              ~num-var))]
-    `(fn [~data-arg]
+                              ~num-var))
+        mname (symbol "int-parser")
+        us (symbol "underscore")]
+    `(defmethod ~mname ~spec [~us ~data-arg]
        (let [~bb-var (.order (ByteBuffer/wrap (byte-array (take-exactly ~bc ~data-arg))) ByteOrder/LITTLE_ENDIAN)
              ~num-var (~getter ~bb-var)]
          ~sign-handler-exp))))
 
-(def int-parsers {i8  (make-int-parser 8 true)
-                  i16 (make-int-parser 16 true)
-                  i32 (make-int-parser 32 true)
-                  i64 (make-int-parser 64 true)
-                  u8  (make-int-parser 8 false)
-                  u16 (make-int-parser 16 false)
-                  u32 (make-int-parser 32 false)
-                  u64 (make-int-parser 64 false)})
+(make-int-parser i8)
+(make-int-parser i16)
+(make-int-parser i32)
+(make-int-parser i64)
+(make-int-parser u8)
+(make-int-parser u16)
+(make-int-parser u32)
+(make-int-parser u64)
 
 (defmulti deserialize (fn [spec _] (spec :type)))
+
+(defmethod deserialize :int
+  [spec data]
+  (int-parser spec data))
 
 (defmethod deserialize :float
   [{bc :bytes} data]
@@ -42,10 +53,6 @@
       4 (.getFloat bb)
       8 (.getDouble bb)
       (throw (new IllegalArgumentException "Floats can have 4 or 8 bytes")))))
-
-(defmethod deserialize :int
-  [spec data]
-  ((int-parsers spec) data))
 
 (defmethod deserialize :string
   [{bc :bytes trim_nulls? :trim_nulls} data]
