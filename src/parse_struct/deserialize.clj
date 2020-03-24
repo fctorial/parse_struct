@@ -15,19 +15,21 @@
                  16 '.getShort
                  32 '.getInt
                  64 '.getLong} bits)
+        endianness ({:little 'ByteOrder/LITTLE_ENDIAN
+                     :big    'ByteOrder/BIG_ENDIAN} (spec :endianness))
         offset (pow 2 bits)
-        data-arg (gensym)
-        bb-var (gensym)
-        num-var (gensym)
+        data-arg (gensym "data")
+        bb-var (gensym "bb")
+        num-var (gensym "num")
         sign-handler-exp (if signed?
                            num-var
                            `(if (neg? ~num-var)
                               (+ ~num-var ~offset)
                               ~num-var))
         mname (symbol "int-parser")
-        us (symbol "underscore")]
-    `(defmethod ~mname ~spec [~us ~data-arg]
-       (let [~bb-var (.order (ByteBuffer/wrap (byte-array (take-exactly ~bc ~data-arg))) ByteOrder/LITTLE_ENDIAN)
+        us (symbol "_")]
+    `(defmethod ~mname ~_spec [~us ~data-arg]
+       (let [~bb-var (.order (ByteBuffer/wrap (byte-array (take-exactly ~bc ~data-arg))) ~endianness)
              ~num-var (~getter ~bb-var)]
          ~sign-handler-exp))))
 
@@ -39,6 +41,15 @@
 (make-int-parser u16)
 (make-int-parser u32)
 (make-int-parser u64)
+
+(make-int-parser i8be)
+(make-int-parser i16be)
+(make-int-parser i32be)
+(make-int-parser i64be)
+(make-int-parser u8be)
+(make-int-parser u16be)
+(make-int-parser u32be)
+(make-int-parser u64be)
 
 (defmulti deserialize (fn [spec _] (spec :type)))
 

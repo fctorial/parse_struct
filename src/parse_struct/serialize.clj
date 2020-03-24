@@ -1,8 +1,76 @@
 (ns parse_struct.serialize
-  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls]])
+  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls]]
+            [parse_struct.common-types :refer :all])
   (:import (java.nio ByteBuffer ByteOrder)))
 
-(defmacro make-int-writer [size]
+(defmulti int-writer (fn [spec _] spec))
+
+(defmacro make-int-writer [_spec]
+  (let [spec (var-get (resolve _spec))
+        size (spec :bytes)
+        min-range (if (spec :signed)
+                    ({1 Byte/MIN_VALUE
+                      2 Short/MIN_VALUE
+                      4 Integer/MIN_VALUE
+                      8 Long/MIN_VALUE} size)
+                    0)
+        signed-max-range ({1 Byte/MAX_VALUE
+                           2 Short/MAX_VALUE
+                           4 Integer/MAX_VALUE
+                           8 Long/MAX_VALUE} size)
+        max-range (if (spec :signed)
+                    signed-max-range
+                    (dec (pow 2 (* 8 size))))
+        putter ({1 '.put
+                 2 '.putShort
+                 4 '.putInt
+                 8 '.putLong} size)
+        caster ({1 byte
+                 2 short
+                 4 int
+                 8 long} size)
+        endianness ({:little 'ByteOrder/LITTLE_ENDIAN
+                     :big    'ByteOrder/BIG_ENDIAN} (spec :endianness))
+        unsigned-offsetter (if (spec :signed)
+                             'identity
+                             (let [value-var (gensym)
+                                   offset (pow 2 (* 8 size))]
+                               `(fn [~value-var]
+                                 (if (> ~value-var ~signed-max-range)
+                                   (- ~value-var ~offset)
+                                   ~value-var))))
+        spec-arg (gensym)
+        value-arg (gensym)
+        bb-var (gensym)
+        name (symbol "int-writer")]
+    `(defmethod ~name ~spec
+       [~spec-arg ~value-arg]
+       (if (not (<= ~min-range ~value-arg ~max-range))
+         (throw (new IllegalArgumentException (str "number: " ~value-arg " is out of bounds for type " ~_spec)))
+         (let [~bb-var (ByteBuffer/allocate ~size)]
+           (.order ~bb-var ~endianness)
+           (~putter ~bb-var (~caster (~unsigned-offsetter ~value-arg)))
+           (.array ~bb-var))))))
+
+(make-int-writer i8)
+(make-int-writer i16)
+(make-int-writer i32)
+(make-int-writer i64)
+(make-int-writer u8)
+(make-int-writer u16)
+(make-int-writer u32)
+(make-int-writer u64)
+
+(make-int-writer i8be)
+(make-int-writer i16be)
+(make-int-writer i32be)
+(make-int-writer i64be)
+(make-int-writer u8be)
+(make-int-writer u16be)
+(make-int-writer u32be)
+(make-int-writer u64be)
+
+#_(defmacro make-int-writer [size]
   (let [min_range ({1 Byte/MIN_VALUE
                     2 Short/MIN_VALUE
                     4 Integer/MIN_VALUE
@@ -29,7 +97,7 @@
            (~putter ~bb-var (~caster ~value-arg))
            (.array ~bb-var))))))
 
-(defmacro make-uint-writer [size]
+#_(defmacro make-uint-writer [size]
   (let [putter ({1 '.put
                  2 '.putShort
                  4 '.putInt
@@ -53,22 +121,11 @@
                                        ~value-arg)))
            (.array ~bb-var))))))
 
-(def int-writers {1 (make-int-writer 1)
-                  2 (make-int-writer 2)
-                  4 (make-int-writer 4)
-                  8 (make-int-writer 8)})
-
-(def uint-writers {1 (make-uint-writer 1)
-                   2 (make-uint-writer 2)
-                   4 (make-uint-writer 4)
-                   8 (make-uint-writer 8)})
-
 (defmulti serialize (fn [spec _] (spec :type)))
 
 (defmethod serialize :int
-  [{bc :bytes signed? :signed} value]
-  (((if signed?
-      int-writers uint-writers) bc) value))
+  [spec value]
+  (int-writer spec value))
 
 (defmacro make-float-writer [size]
   (let [putter ({4 '.putFloat
