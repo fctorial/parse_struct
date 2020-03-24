@@ -5,7 +5,7 @@ Parse C struct dumps in clojure.
 ## Installation:
 
 ```
-fctorial/parse_struct   {:mvn/version "0.7.0"}
+fctorial/parse_struct   {:mvn/version "0.7.1"}
 ```
 
 ## Usage:
