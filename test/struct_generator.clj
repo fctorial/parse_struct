@@ -78,7 +78,17 @@
                 i64
                 u64
                 f32
-                f64])
+                f64
+                i8be
+                u8be
+                i16be
+                u16be
+                i32be
+                u32be
+                i64be
+                u64be
+                f32be
+                f64be])
 
 (declare gen-rand-spec)
 

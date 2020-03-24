@@ -70,57 +70,6 @@
 (make-int-writer u32be)
 (make-int-writer u64be)
 
-#_(defmacro make-int-writer [size]
-  (let [min_range ({1 Byte/MIN_VALUE
-                    2 Short/MIN_VALUE
-                    4 Integer/MIN_VALUE
-                    8 Long/MIN_VALUE} size)
-        max_range ({1 Byte/MAX_VALUE
-                    2 Short/MAX_VALUE
-                    4 Integer/MAX_VALUE
-                    8 Long/MAX_VALUE} size)
-        putter ({1 '.put
-                 2 '.putShort
-                 4 '.putInt
-                 8 '.putLong} size)
-        caster ({1 byte
-                 2 short
-                 4 int
-                 8 long} size)
-        value-arg (gensym)
-        bb-var (gensym)]
-    `(fn [~value-arg]
-       (if (not (<= ~min_range ~value-arg ~max_range))
-         (throw (new IllegalArgumentException (str "number: " ~value-arg " is out of range")))
-         (let [~bb-var (ByteBuffer/allocate ~size)]
-           (.order ~bb-var ByteOrder/LITTLE_ENDIAN)
-           (~putter ~bb-var (~caster ~value-arg))
-           (.array ~bb-var))))))
-
-#_(defmacro make-uint-writer [size]
-  (let [putter ({1 '.put
-                 2 '.putShort
-                 4 '.putInt
-                 8 '.putLong} size)
-        caster ({1 byte
-                 2 short
-                 4 int
-                 8 long} size)
-        unsigned_off (pow 2 (* 8 size))
-        unsigned_lim (/ unsigned_off 2)
-        max_unsigned (dec unsigned_off)
-        value-arg (gensym)
-        bb-var (gensym)]
-    `(fn [~value-arg]
-       (if (not (<= 0 ~value-arg ~max_unsigned))
-         (throw (new IllegalArgumentException (str "number: " ~value-arg " is out of range")))
-         (let [~bb-var (ByteBuffer/allocate ~size)]
-           (.order ~bb-var ByteOrder/LITTLE_ENDIAN)
-           (~putter ~bb-var (~caster (if (>= ~value-arg ~unsigned_lim)
-                                       (- ~value-arg ~unsigned_off)
-                                       ~value-arg)))
-           (.array ~bb-var))))))
-
 (defmulti serialize (fn [spec _] (spec :type)))
 
 (defmethod serialize :int

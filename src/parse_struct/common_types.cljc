@@ -44,6 +44,10 @@
           :bytes 4
           :endianness :little})
 
+(def f64 {:type :float
+          :bytes 8
+          :endianness :little})
+
 (def i8be {:type   :int
            :bytes  1
            :signed true
@@ -88,9 +92,9 @@
             :bytes 4
             :endianness :big})
 
-(def f64 {:type :float
-          :bytes 8
-          :endianness :little})
+(def f64be {:type       :float
+            :bytes      8
+            :endianness :little})
 
 (def name8 {:type       :string
             :bytes      8
