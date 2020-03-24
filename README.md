@@ -52,10 +52,6 @@ fctorial/parse_struct   {:mvn/version "0.7.1"}
 
 Structs and arrays can be arbitrarily nested.
 
-### Note:
-
-All numerical values are parsed as little endian
-
 ### TODO:
 
 * More tests for big endian
