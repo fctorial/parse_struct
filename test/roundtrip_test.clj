@@ -3,7 +3,6 @@
             [parse_struct.deserialize :refer [deserialize]]
             [parse_struct.serialize :refer [serialize]]
             [struct-generator :refer [gen-rand-spec gen-struct-val]]
-            [popen :refer :all]
             [pjstadig.humane-test-output :as hto]))
 
 (defn unit-work [id]

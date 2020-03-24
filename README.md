@@ -5,7 +5,7 @@ Parse C struct dumps in clojure.
 ## Installation:
 
 ```
-org.clojars.fctorial/parse-struct   {:mvn/version "0.6.0"}
+fctorial/parse_struct   {:mvn/version "0.7.0"}
 ```
 
 ## Usage:
@@ -22,9 +22,9 @@ org.clojars.fctorial/parse-struct   {:mvn/version "0.6.0"}
 
 (deserialize {:type    :array
               :len     20
-              :element ct/u32}
+              :element ct/u32be}
              byte-seq)
-; lazyseq of unsigned integers (long if they're too big, since java doesn't have unsigned. Large longs are stored in bigint)
+; seq of big endian unsigned integers (long if they're too big, since java doesn't have unsigned. Large longs are stored in bigint)
 
 (deserialize {:type        :struct
               :definition [[:a ct/i32]
@@ -58,7 +58,7 @@ All numerical values are parsed as little endian
 
 ### TODO:
 
-* Configurable endianness
+* More tests for big endian
 * spec
 * support cljs
 

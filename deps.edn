@@ -1,9 +1,9 @@
-{:deps    {popen {:mvn/version "0.3.1"}
-           potemkin {:mvn/version "0.4.5"}}
+{:deps    {potemkin {:mvn/version "0.4.5"}}
  :aliases {:test       {:extra-paths ["test"]
                         :extra-deps  {pjstadig/humane-test-output {:mvn/version "0.10.0"}}
                         :main-opts   ["-m" "all-tests"]}
            :test-setup {:extra-paths ["test"]
+                        :extra-deps {popen {:mvn/version "0.3.1"}}
                         :main-opts   ["-m" "test-setup"]}
            :bench      {:extra-paths ["test"]
                         :extra-deps  {criterium {:mvn/version "0.4.5"}}
