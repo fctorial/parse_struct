@@ -8,7 +8,7 @@
 
 (deftest serialization
   (hto/activate!)
-  (doseq [i (range 1 9)
+  (doseq [i (range 1 10)
           :let [dump_file (str "test/data/dmp" i)
                 dump_def (deref (ns-resolve 'dump_defs (symbol (str "dump" i "_def"))))
                 dump_data (deref (ns-resolve 'dump_defs (symbol (str "dump" i "_data"))))]]

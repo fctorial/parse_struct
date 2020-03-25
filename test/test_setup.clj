@@ -3,7 +3,7 @@
 
 (defn -main []
   (exit-code (popen ["sh" "-c" "rm test/data/*"]))
-  (let [rustc (popen ["rustc" "test/structs1.rs" "-o" "test/data/structs1"] :redirect true)]
+  (let [rustc (popen ["rustc" "-C" "opt-level=0" "test/structs1.rs" "-o" "test/data/structs1"] :redirect true)]
     (if (not (zero? (exit-code rustc)))
       (do
         (println "rustc failed")

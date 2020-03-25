@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::Write;
+use std::mem::transmute;
 
 #[derive(Debug, Clone, Copy)]
 #[repr(packed)]
@@ -49,6 +50,12 @@ struct S5 {
     d: [f64; 5]
 }
 
+#[derive(Debug, Clone, Copy)]
+#[repr(C)]
+struct S6 {
+    a: u16,
+    b: i32
+}
 
 unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
     ::std::slice::from_raw_parts(
@@ -119,4 +126,19 @@ fn main() {
         d: [256.0; 5]
     };
     dump_to_file(&s5, "test/data/dmp8");
+
+    let mut s6 = S6 {
+        a: 40000,
+        b: -40000
+    };
+    unsafe {
+        let mut bs = transmute::<S6, [u8; 8]>(s6);
+        bs[2] = 0;
+        bs[3] = 0;
+    }
+    println!("{:?}", s6);
+    dump_to_file(&s6, "test/data/dmp9");
+
+    let s7 = [s6; 20];
+    dump_to_file(&s7, "test/data/dmp10")
 }

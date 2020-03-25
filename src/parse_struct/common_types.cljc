@@ -100,3 +100,7 @@
             :bytes      8
             :trim_nulls true})
 
+(defn padding [n]
+  {:type :padding
+   :bytes n})
+

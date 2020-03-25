@@ -115,3 +115,7 @@
 (defmethod serialize :array
   [{len :len element :element} value]
   (apply concat (map #(serialize element %) (take-exactly len value))))
+
+(defmethod serialize :padding
+  [{bc :bytes} _]
+  (repeat bc (byte 0)))

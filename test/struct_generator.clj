@@ -67,7 +67,9 @@
     :array (for [_ (range (spec :len))]
              (gen-struct-val (spec :element)))
     :struct (into {}
-                  (map (fn [[name value]] [name (gen-struct-val value)]) (spec :definition)))))
+                  (map (fn [[name value]] [name (gen-struct-val value)]) (filter (fn [[_ s]]
+                                                                                   (not= (s :type) :padding))
+                                                                                 (spec :definition))))))
 
 (def num_prims [i8
                 u8
@@ -108,7 +110,12 @@
   (let [count (rand-int max-children)
         next-characteristics (update characteristics :max-depth dec)]
     {:type       :struct
-     :definition (map (fn [_] [(uuid) (gen-rand-spec next-characteristics)]) (range count))}))
+     :definition (map (fn [_]
+                        [(uuid) (if (zero? (rand-int 5))
+                                  {:type :padding
+                                   :bytes (rand-int 10)}
+                                  (gen-rand-spec next-characteristics))])
+                      (range count))}))
 
 (defn gen-rand-spec [{max-depth :max-depth :as characteristics}]
   (if (zero? max-depth)
