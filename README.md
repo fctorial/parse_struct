@@ -2,10 +2,30 @@
 
 Parse C struct dumps in clojure.
 
+[![Clojars Project](https://img.shields.io/clojars/v/fctorial/parse_struct.svg)](https://clojars.org/fctorial/parse_struct)
+
 ## Installation:
 
+#### Leiningen/Boot
+
+    [fctorial/parse_struct "0.7.2"]
+
+#### Clojure CLI/deps.edn
+
+    fctorial/parse_struct {:mvn/version "0.7.2"}
+
+#### Gradle
+
+    compile 'fctorial:parse_struct:0.7.2'
+
+#### Maven
+
 ```
-fctorial/parse_struct   {:mvn/version "0.7.1"}
+<dependency>
+  <groupId>fctorial</groupId>
+  <artifactId>parse_struct</artifactId>
+  <version>0.7.2</version>
+</dependency>
 ```
 
 ## Usage:
@@ -27,12 +47,17 @@ fctorial/parse_struct   {:mvn/version "0.7.1"}
 ; seq of big endian unsigned integers (long if they're too big, since java doesn't have unsigned. Large longs are stored in bigint)
 
 (deserialize {:type        :struct
-              :definition [[:a ct/i32]
-                           [:b {:type       :string
+              :definition [[:a ct/u32]
+                           [nil (ct/padding 2)]
+                           [:b ct/i32]
+                           [:c {:type       :string
                                 :bytes      8
                                 :trim_nulls true}]]}
              byte-seq)
 ; a struct
+
+; ct/padding can be used in struct defs
+; when serializing, padding bytes are returned as 0
 
 ; For strings:
 ; :trim_nulls = true returns characters upto first null character,
@@ -55,7 +80,6 @@ Structs and arrays can be arbitrarily nested.
 ### TODO:
 
 * More tests for big endian
-* spec
 * support cljs
 
 ### Tests:
