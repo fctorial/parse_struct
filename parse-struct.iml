@@ -10,11 +10,32 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Deps: org.clojure/clojure:1.10.1" level="project" />
-    <orderEntry type="library" name="Deps: potemkin:0.4.5" level="project" />
-    <orderEntry type="library" name="Deps: pjstadig/humane-test-output:0.10.0" level="project" />
-    <orderEntry type="library" name="Deps: org.clojure/spec.alpha:0.2.176" level="project" />
+    <orderEntry type="library" name="Deps: commons-codec:1.11" level="project" />
+    <orderEntry type="library" name="Deps: ring/ring-devel:1.8.0" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/core.specs.alpha:0.2.44" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/spec.alpha:0.2.176" level="project" />
+    <orderEntry type="library" name="Deps: commons-fileupload:1.4" level="project" />
+    <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-http:9.4.22.v20191022" level="project" />
+    <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-util:9.4.22.v20191022" level="project" />
+    <orderEntry type="library" name="Deps: ring/ring-jetty-adapter:1.8.0" level="project" />
+    <orderEntry type="library" name="Deps: commons-io:2.6" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/tools.namespace:0.2.11" level="project" />
     <orderEntry type="library" name="Deps: clj-tuple:0.2.2" level="project" />
+    <orderEntry type="library" name="Deps: hiccup:1.0.5" level="project" />
+    <orderEntry type="library" name="Deps: pjstadig/humane-test-output:0.10.0" level="project" />
     <orderEntry type="library" name="Deps: riddley:0.1.12" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/java.classpath:0.3.0" level="project" />
+    <orderEntry type="library" name="Deps: ns-tracker:0.4.0" level="project" />
+    <orderEntry type="library" name="Deps: crypto-random:1.2.0" level="project" />
+    <orderEntry type="library" name="Deps: ring/ring-codec:1.1.2" level="project" />
+    <orderEntry type="library" name="Deps: crypto-equality:1.0.0" level="project" />
+    <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-io:9.4.22.v20191022" level="project" />
+    <orderEntry type="library" name="Deps: javax.servlet/javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Deps: potemkin:0.4.5" level="project" />
+    <orderEntry type="library" name="Deps: clj-stacktrace:0.2.8" level="project" />
+    <orderEntry type="library" name="Deps: ring/ring-servlet:1.8.0" level="project" />
+    <orderEntry type="library" name="Deps: ring:1.8.0" level="project" />
+    <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-server:9.4.22.v20191022" level="project" />
+    <orderEntry type="library" name="Deps: ring/ring-core:1.8.0" level="project" />
   </component>
 </module>
