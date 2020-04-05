@@ -44,7 +44,7 @@ Parse C struct dumps in clojure.
               :len     20
               :element ct/u32be}
              byte-seq)
-; seq of big endian unsigned integers (long if they're too big, since java doesn't have unsigned. Large longs are stored in bigint)
+; seq of unsigned integers parsed as big endian (long if they're too big, since java doesn't have unsigned. Large longs are stored in bigint)
 
 (deserialize {:type        :struct
               :definition [[:a ct/u32]

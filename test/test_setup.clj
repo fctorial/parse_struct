@@ -1,5 +1,6 @@
 (ns test-setup
-  (:require [popen :refer :all]))
+  (:require [popen :refer :all]
+            [cljs_build]))
 
 (defn -main []
   (exit-code (popen ["sh" "-c" "rm test/data/*"]))
@@ -10,4 +11,4 @@
         (println (stdout rustc)))
       (if (not (zero? (exit-code (popen ["./test/data/structs1"]))))
         (println "dumper failed")
-        (println "OK")))))
+        (println "binary dumps: OK")))))

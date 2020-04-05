@@ -7,24 +7,17 @@
    :include true,
    :reason :new-top-dep}
   {:path [],
-   :lib org.clojure/data.json,
-   :coord {:mvn/version "1.0.0"},
-   :use-coord {:mvn/version "1.0.0"},
-   :coord-id {:mvn/version "1.0.0"},
+   :lib potemkin/potemkin,
+   :coord {:mvn/version "0.4.5"},
+   :use-coord {:mvn/version "0.4.5"},
+   :coord-id {:mvn/version "0.4.5"},
    :include true,
    :reason :new-top-dep}
   {:path [],
-   :lib popen/popen,
-   :coord {:mvn/version "0.3.1"},
-   :use-coord {:mvn/version "0.3.1"},
-   :coord-id {:mvn/version "0.3.1"},
-   :include true,
-   :reason :new-top-dep}
-  {:path [],
-   :lib pjstadig/humane-test-output,
-   :coord {:mvn/version "0.10.0"},
-   :use-coord {:mvn/version "0.10.0"},
-   :coord-id {:mvn/version "0.10.0"},
+   :lib org.clojure/clojurescript,
+   :coord {:mvn/version "1.10.520"},
+   :use-coord {:mvn/version "1.10.520"},
+   :coord-id {:mvn/version "1.10.520"},
    :include true,
    :reason :new-top-dep}
   {:path [org.clojure/clojure],
@@ -41,59 +34,556 @@
    :coord-id {:mvn/version "0.2.44"},
    :include true,
    :reason :new-dep}
-  {:path [org.clojure/data.json],
+  {:path [potemkin/potemkin],
+   :lib clj-tuple/clj-tuple,
+   :coord {:mvn/version "0.2.2"},
+   :use-coord {:mvn/version "0.2.2"},
+   :coord-id {:mvn/version "0.2.2"},
+   :include true,
+   :reason :new-dep}
+  {:path [potemkin/potemkin],
+   :lib riddley/riddley,
+   :coord {:mvn/version "0.1.12"},
+   :use-coord {:mvn/version "0.1.12"},
+   :coord-id {:mvn/version "0.1.12"},
+   :include true,
+   :reason :new-dep}
+  {:path [org.clojure/clojurescript],
+   :lib org.clojure/clojure,
+   :coord {:mvn/version "1.8.0"},
+   :use-coord {:mvn/version "1.8.0"},
+   :coord-id {:mvn/version "1.8.0"},
+   :include false,
+   :reason :use-top}
+  {:path [org.clojure/clojurescript],
+   :lib com.google.javascript/closure-compiler-unshaded,
+   :coord {:mvn/version "v20180805"},
+   :use-coord {:mvn/version "v20180805"},
+   :coord-id {:mvn/version "v20180805"},
+   :include true,
+   :reason :new-dep}
+  {:path [org.clojure/clojurescript],
+   :lib org.clojure/google-closure-library,
+   :coord {:mvn/version "0.0-20170809-b9c14c6b"},
+   :use-coord {:mvn/version "0.0-20170809-b9c14c6b"},
+   :coord-id {:mvn/version "0.0-20170809-b9c14c6b"},
+   :include true,
+   :reason :new-dep}
+  {:path [org.clojure/clojurescript],
+   :lib org.clojure/data.json,
+   :coord {:mvn/version "0.2.6"},
+   :use-coord {:mvn/version "0.2.6"},
+   :coord-id {:mvn/version "0.2.6"},
+   :include true,
+   :reason :new-dep}
+  {:path [org.clojure/clojurescript],
+   :lib org.mozilla/rhino,
+   :coord {:mvn/version "1.7R5"},
+   :use-coord {:mvn/version "1.7R5"},
+   :coord-id {:mvn/version "1.7R5"},
+   :include true,
+   :reason :new-dep}
+  {:path [org.clojure/clojurescript],
+   :lib org.clojure/tools.reader,
+   :coord {:mvn/version "1.3.0"},
+   :use-coord {:mvn/version "1.3.0"},
+   :coord-id {:mvn/version "1.3.0"},
+   :include true,
+   :reason :new-dep}
+  {:path [org.clojure/clojurescript],
+   :lib com.cognitect/transit-clj,
+   :coord {:mvn/version "0.8.309", :exclusions #{org.clojure/clojure}},
+   :use-coord
+   {:mvn/version "0.8.309", :exclusions #{org.clojure/clojure}},
+   :coord-id {:mvn/version "0.8.309"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib com.google.javascript/closure-compiler-externs,
+   :coord {:mvn/version "v20180805"},
+   :use-coord {:mvn/version "v20180805"},
+   :coord-id {:mvn/version "v20180805"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib args4j/args4j,
+   :coord {:mvn/version "2.0.26"},
+   :use-coord {:mvn/version "2.0.26"},
+   :coord-id {:mvn/version "2.0.26"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib com.google.errorprone/error_prone_annotations,
+   :coord {:mvn/version "2.0.18"},
+   :use-coord {:mvn/version "2.0.18"},
+   :coord-id {:mvn/version "2.0.18"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib com.google.guava/guava,
+   :coord {:mvn/version "25.1-jre"},
+   :use-coord {:mvn/version "25.1-jre"},
+   :coord-id {:mvn/version "25.1-jre"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib com.google.protobuf/protobuf-java,
+   :coord {:mvn/version "3.0.2"},
+   :use-coord {:mvn/version "3.0.2"},
+   :coord-id {:mvn/version "3.0.2"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib com.google.code.gson/gson,
+   :coord {:mvn/version "2.7"},
+   :use-coord {:mvn/version "2.7"},
+   :coord-id {:mvn/version "2.7"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib com.google.code.findbugs/jsr305,
+   :coord {:mvn/version "3.0.1"},
+   :use-coord {:mvn/version "3.0.1"},
+   :coord-id {:mvn/version "3.0.1"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded],
+   :lib com.google.jsinterop/jsinterop-annotations,
+   :coord {:mvn/version "1.0.0"},
+   :use-coord {:mvn/version "1.0.0"},
+   :coord-id {:mvn/version "1.0.0"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript org.clojure/google-closure-library],
+   :lib org.clojure/google-closure-library-third-party,
+   :coord {:mvn/version "0.0-20170809-b9c14c6b"},
+   :use-coord {:mvn/version "0.0-20170809-b9c14c6b"},
+   :coord-id {:mvn/version "0.0-20170809-b9c14c6b"},
+   :include true,
+   :reason :new-dep}
+  {:path [org.clojure/clojurescript org.clojure/data.json],
    :lib org.clojure/clojure,
    :coord {:mvn/version "1.4.0"},
    :use-coord {:mvn/version "1.4.0"},
    :coord-id {:mvn/version "1.4.0"},
    :include false,
    :reason :use-top}
-  {:path [popen/popen],
+  {:path [org.clojure/clojurescript org.clojure/tools.reader],
    :lib org.clojure/clojure,
-   :coord {:mvn/version "1.8.0"},
-   :use-coord {:mvn/version "1.8.0"},
-   :coord-id {:mvn/version "1.8.0"},
+   :coord {:mvn/version "1.5.1"},
+   :use-coord {:mvn/version "1.5.1"},
+   :coord-id {:mvn/version "1.5.1"},
    :include false,
-   :reason :use-top}],
+   :reason :use-top}
+  {:path [org.clojure/clojurescript com.cognitect/transit-clj],
+   :lib com.cognitect/transit-java,
+   :coord {:mvn/version "0.8.332"},
+   :use-coord {:mvn/version "0.8.332"},
+   :coord-id {:mvn/version "0.8.332"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded
+    com.google.guava/guava],
+   :lib com.google.code.findbugs/jsr305,
+   :coord {:mvn/version "3.0.2"},
+   :use-coord {:mvn/version "3.0.2"},
+   :coord-id {:mvn/version "3.0.2"},
+   :include true,
+   :reason :newer-version}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded
+    com.google.guava/guava],
+   :lib org.checkerframework/checker-qual,
+   :coord {:mvn/version "2.0.0"},
+   :use-coord {:mvn/version "2.0.0"},
+   :coord-id {:mvn/version "2.0.0"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded
+    com.google.guava/guava],
+   :lib com.google.errorprone/error_prone_annotations,
+   :coord {:mvn/version "2.1.3"},
+   :use-coord {:mvn/version "2.1.3"},
+   :coord-id {:mvn/version "2.1.3"},
+   :include true,
+   :reason :newer-version}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded
+    com.google.guava/guava],
+   :lib com.google.j2objc/j2objc-annotations,
+   :coord {:mvn/version "1.1"},
+   :use-coord {:mvn/version "1.1"},
+   :coord-id {:mvn/version "1.1"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.google.javascript/closure-compiler-unshaded
+    com.google.guava/guava],
+   :lib org.codehaus.mojo/animal-sniffer-annotations,
+   :coord {:mvn/version "1.14"},
+   :use-coord {:mvn/version "1.14"},
+   :coord-id {:mvn/version "1.14"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.cognitect/transit-clj
+    com.cognitect/transit-java],
+   :lib com.fasterxml.jackson.core/jackson-core,
+   :coord {:mvn/version "2.8.7"},
+   :use-coord {:mvn/version "2.8.7"},
+   :coord-id {:mvn/version "2.8.7"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.cognitect/transit-clj
+    com.cognitect/transit-java],
+   :lib org.msgpack/msgpack,
+   :coord {:mvn/version "0.6.12"},
+   :use-coord {:mvn/version "0.6.12"},
+   :coord-id {:mvn/version "0.6.12"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.cognitect/transit-clj
+    com.cognitect/transit-java],
+   :lib commons-codec/commons-codec,
+   :coord {:mvn/version "1.10"},
+   :use-coord {:mvn/version "1.10"},
+   :coord-id {:mvn/version "1.10"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.cognitect/transit-clj
+    com.cognitect/transit-java
+    org.msgpack/msgpack],
+   :lib com.googlecode.json-simple/json-simple,
+   :coord {:mvn/version "1.1.1", :exclusions #{junit/junit}},
+   :use-coord {:mvn/version "1.1.1", :exclusions #{junit/junit}},
+   :coord-id {:mvn/version "1.1.1"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.cognitect/transit-clj
+    com.cognitect/transit-java
+    org.msgpack/msgpack],
+   :lib org.javassist/javassist,
+   :coord {:mvn/version "3.18.1-GA"},
+   :use-coord {:mvn/version "3.18.1-GA"},
+   :coord-id {:mvn/version "3.18.1-GA"},
+   :include true,
+   :reason :new-dep}
+  {:path
+   [org.clojure/clojurescript
+    com.cognitect/transit-clj
+    com.cognitect/transit-java
+    org.msgpack/msgpack
+    com.googlecode.json-simple/json-simple],
+   :lib junit/junit,
+   :coord {:mvn/version "4.10"},
+   :use-coord {:mvn/version "4.10"},
+   :coord-id {:mvn/version "4.10"},
+   :include false,
+   :reason :excluded}],
  :vmap
- {org.clojure/clojure
+ {com.cognitect/transit-java
+  {:versions
+   {{:mvn/version "0.8.332"}
+    {:mvn/version "0.8.332", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "0.8.332"}
+    #{[org.clojure/clojurescript com.cognitect/transit-clj]}},
+   :select {:mvn/version "0.8.332"}},
+  org.clojure/data.json
+  {:versions
+   {{:mvn/version "0.2.6"}
+    {:mvn/version "0.2.6", :deps/manifest :mvn}},
+   :paths {{:mvn/version "0.2.6"} #{[org.clojure/clojurescript]}},
+   :select {:mvn/version "0.2.6"}},
+  org.clojure/clojure
   {:versions
    {{:mvn/version "1.10.1"}
     {:mvn/version "1.10.1", :deps/manifest :mvn}},
    :paths {{:mvn/version "1.10.1"} #{[]}},
    :select {:mvn/version "1.10.1"},
    :top true},
-  org.clojure/data.json
+  commons-codec/commons-codec
   {:versions
-   {{:mvn/version "1.0.0"}
-    {:mvn/version "1.0.0", :deps/manifest :mvn}},
-   :paths {{:mvn/version "1.0.0"} #{[]}},
-   :select {:mvn/version "1.0.0"},
-   :top true},
-  popen/popen
+   {{:mvn/version "1.10"} {:mvn/version "1.10", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "1.10"}
+    #{[org.clojure/clojurescript
+       com.cognitect/transit-clj
+       com.cognitect/transit-java]}},
+   :select {:mvn/version "1.10"}},
+  com.google.errorprone/error_prone_annotations
   {:versions
-   {{:mvn/version "0.3.1"}
-    {:mvn/version "0.3.1", :deps/manifest :mvn}},
-   :paths {{:mvn/version "0.3.1"} #{[]}},
-   :select {:mvn/version "0.3.1"},
-   :top true},
-  pjstadig/humane-test-output
+   {{:mvn/version "2.0.18"}
+    {:mvn/version "2.0.18", :deps/manifest :mvn},
+    {:mvn/version "2.1.3"}
+    {:mvn/version "2.1.3", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "2.1.3"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded
+       com.google.guava/guava]},
+    {:mvn/version "2.0.18"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "2.1.3"}},
+  org.clojure/core.specs.alpha
   {:versions
-   {{:mvn/version "0.10.0"}
-    {:mvn/version "0.10.0", :deps/manifest :mvn}},
-   :paths {{:mvn/version "0.10.0"} #{[]}},
-   :select {:mvn/version "0.10.0"},
-   :top true},
+   {{:mvn/version "0.2.44"}
+    {:mvn/version "0.2.44", :deps/manifest :mvn}},
+   :paths {{:mvn/version "0.2.44"} #{[org.clojure/clojure]}},
+   :select {:mvn/version "0.2.44"}},
   org.clojure/spec.alpha
   {:versions
    {{:mvn/version "0.2.176"}
     {:mvn/version "0.2.176", :deps/manifest :mvn}},
    :paths {{:mvn/version "0.2.176"} #{[org.clojure/clojure]}},
    :select {:mvn/version "0.2.176"}},
-  org.clojure/core.specs.alpha
+  org.codehaus.mojo/animal-sniffer-annotations
   {:versions
-   {{:mvn/version "0.2.44"}
-    {:mvn/version "0.2.44", :deps/manifest :mvn}},
-   :paths {{:mvn/version "0.2.44"} #{[org.clojure/clojure]}},
-   :select {:mvn/version "0.2.44"}}},
- :exclusions nil}
+   {{:mvn/version "1.14"} {:mvn/version "1.14", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "1.14"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded
+       com.google.guava/guava]}},
+   :select {:mvn/version "1.14"}},
+  com.googlecode.json-simple/json-simple
+  {:versions
+   {{:mvn/version "1.1.1"}
+    {:mvn/version "1.1.1",
+     :exclusions #{junit/junit},
+     :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "1.1.1"}
+    #{[org.clojure/clojurescript
+       com.cognitect/transit-clj
+       com.cognitect/transit-java
+       org.msgpack/msgpack]}},
+   :select {:mvn/version "1.1.1"}},
+  org.clojure/google-closure-library
+  {:versions
+   {{:mvn/version "0.0-20170809-b9c14c6b"}
+    {:mvn/version "0.0-20170809-b9c14c6b", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "0.0-20170809-b9c14c6b"}
+    #{[org.clojure/clojurescript]}},
+   :select {:mvn/version "0.0-20170809-b9c14c6b"}},
+  org.clojure/clojurescript
+  {:versions
+   {{:mvn/version "1.10.520"}
+    {:mvn/version "1.10.520", :deps/manifest :mvn}},
+   :paths {{:mvn/version "1.10.520"} #{[]}},
+   :select {:mvn/version "1.10.520"},
+   :top true},
+  com.google.jsinterop/jsinterop-annotations
+  {:versions
+   {{:mvn/version "1.0.0"}
+    {:mvn/version "1.0.0", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "1.0.0"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "1.0.0"}},
+  com.fasterxml.jackson.core/jackson-core
+  {:versions
+   {{:mvn/version "2.8.7"}
+    {:mvn/version "2.8.7", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "2.8.7"}
+    #{[org.clojure/clojurescript
+       com.cognitect/transit-clj
+       com.cognitect/transit-java]}},
+   :select {:mvn/version "2.8.7"}},
+  clj-tuple/clj-tuple
+  {:versions
+   {{:mvn/version "0.2.2"}
+    {:mvn/version "0.2.2", :deps/manifest :mvn}},
+   :paths {{:mvn/version "0.2.2"} #{[potemkin/potemkin]}},
+   :select {:mvn/version "0.2.2"}},
+  org.mozilla/rhino
+  {:versions
+   {{:mvn/version "1.7R5"}
+    {:mvn/version "1.7R5", :deps/manifest :mvn}},
+   :paths {{:mvn/version "1.7R5"} #{[org.clojure/clojurescript]}},
+   :select {:mvn/version "1.7R5"}},
+  org.clojure/google-closure-library-third-party
+  {:versions
+   {{:mvn/version "0.0-20170809-b9c14c6b"}
+    {:mvn/version "0.0-20170809-b9c14c6b", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "0.0-20170809-b9c14c6b"}
+    #{[org.clojure/clojurescript org.clojure/google-closure-library]}},
+   :select {:mvn/version "0.0-20170809-b9c14c6b"}},
+  riddley/riddley
+  {:versions
+   {{:mvn/version "0.1.12"}
+    {:mvn/version "0.1.12", :deps/manifest :mvn}},
+   :paths {{:mvn/version "0.1.12"} #{[potemkin/potemkin]}},
+   :select {:mvn/version "0.1.12"}},
+  com.google.javascript/closure-compiler-externs
+  {:versions
+   {{:mvn/version "v20180805"}
+    {:mvn/version "v20180805", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "v20180805"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "v20180805"}},
+  org.javassist/javassist
+  {:versions
+   {{:mvn/version "3.18.1-GA"}
+    {:mvn/version "3.18.1-GA", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "3.18.1-GA"}
+    #{[org.clojure/clojurescript
+       com.cognitect/transit-clj
+       com.cognitect/transit-java
+       org.msgpack/msgpack]}},
+   :select {:mvn/version "3.18.1-GA"}},
+  com.google.guava/guava
+  {:versions
+   {{:mvn/version "25.1-jre"}
+    {:mvn/version "25.1-jre", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "25.1-jre"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "25.1-jre"}},
+  org.msgpack/msgpack
+  {:versions
+   {{:mvn/version "0.6.12"}
+    {:mvn/version "0.6.12", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "0.6.12"}
+    #{[org.clojure/clojurescript
+       com.cognitect/transit-clj
+       com.cognitect/transit-java]}},
+   :select {:mvn/version "0.6.12"}},
+  com.google.j2objc/j2objc-annotations
+  {:versions
+   {{:mvn/version "1.1"} {:mvn/version "1.1", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "1.1"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded
+       com.google.guava/guava]}},
+   :select {:mvn/version "1.1"}},
+  com.cognitect/transit-clj
+  {:versions
+   {{:mvn/version "0.8.309"}
+    {:mvn/version "0.8.309",
+     :exclusions #{org.clojure/clojure},
+     :deps/manifest :mvn}},
+   :paths {{:mvn/version "0.8.309"} #{[org.clojure/clojurescript]}},
+   :select {:mvn/version "0.8.309"}},
+  args4j/args4j
+  {:versions
+   {{:mvn/version "2.0.26"}
+    {:mvn/version "2.0.26", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "2.0.26"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "2.0.26"}},
+  org.checkerframework/checker-qual
+  {:versions
+   {{:mvn/version "2.0.0"}
+    {:mvn/version "2.0.0", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "2.0.0"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded
+       com.google.guava/guava]}},
+   :select {:mvn/version "2.0.0"}},
+  org.clojure/tools.reader
+  {:versions
+   {{:mvn/version "1.3.0"}
+    {:mvn/version "1.3.0", :deps/manifest :mvn}},
+   :paths {{:mvn/version "1.3.0"} #{[org.clojure/clojurescript]}},
+   :select {:mvn/version "1.3.0"}},
+  potemkin/potemkin
+  {:versions
+   {{:mvn/version "0.4.5"}
+    {:mvn/version "0.4.5", :deps/manifest :mvn}},
+   :paths {{:mvn/version "0.4.5"} #{[]}},
+   :select {:mvn/version "0.4.5"},
+   :top true},
+  com.google.javascript/closure-compiler-unshaded
+  {:versions
+   {{:mvn/version "v20180805"}
+    {:mvn/version "v20180805", :deps/manifest :mvn}},
+   :paths {{:mvn/version "v20180805"} #{[org.clojure/clojurescript]}},
+   :select {:mvn/version "v20180805"}},
+  com.google.protobuf/protobuf-java
+  {:versions
+   {{:mvn/version "3.0.2"}
+    {:mvn/version "3.0.2", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "3.0.2"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "3.0.2"}},
+  com.google.code.findbugs/jsr305
+  {:versions
+   {{:mvn/version "3.0.1"} {:mvn/version "3.0.1", :deps/manifest :mvn},
+    {:mvn/version "3.0.2"}
+    {:mvn/version "3.0.2", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "3.0.2"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded
+       com.google.guava/guava]},
+    {:mvn/version "3.0.1"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "3.0.2"}},
+  com.google.code.gson/gson
+  {:versions
+   {{:mvn/version "2.7"} {:mvn/version "2.7", :deps/manifest :mvn}},
+   :paths
+   {{:mvn/version "2.7"}
+    #{[org.clojure/clojurescript
+       com.google.javascript/closure-compiler-unshaded]}},
+   :select {:mvn/version "2.7"}}},
+ :exclusions
+ {[org.clojure/clojurescript com.cognitect/transit-clj]
+  #{org.clojure/clojure},
+  [org.clojure/clojurescript
+   com.cognitect/transit-clj
+   com.cognitect/transit-java
+   org.msgpack/msgpack
+   com.googlecode.json-simple/json-simple]
+  #{junit/junit}}}
