@@ -3,11 +3,11 @@
 
 (defn -main []
   (exit-code (popen ["sh" "-c" "rm test/data/*"]))
-  (let [rustc (popen ["rustc" "-C" "opt-level=0" "test/structs1.rs" "-o" "test/data/structs1"] :redirect true)]
-    (if (not (zero? (exit-code rustc)))
+  (let [gcc (popen ["gcc" "test/structs1.c" "-o" "test/data/structs1"] :redirect true)]
+    (if (not (zero? (exit-code gcc)))
       (do
         (println "rustc failed")
-        (println (stdout rustc)))
+        (println (stdout gcc)))
       (if (not (zero? (exit-code (popen ["./test/data/structs1"]))))
         (println "dumper failed")
         (println "OK")))))

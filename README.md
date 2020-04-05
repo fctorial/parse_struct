@@ -84,7 +84,7 @@ Structs and arrays can be arbitrarily nested.
 
 ### Tests:
 
-You'll need to have `rustc` installed to run tests.
+You'll need to have `gcc` installed to run tests.
 
 ```
 clojure -A:test-setup
