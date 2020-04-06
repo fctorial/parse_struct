@@ -1,6 +1,6 @@
 (ns roundtrip_test
-  (:require [tester.core :refer :all]
-            [tester.predicates :refer :all]
+  (:require [tst.core :refer :all]
+            [tst.predicates :refer :all]
             [parse_struct.deserialize :refer [deserialize]]
             [parse_struct.serialize :refer [serialize]]
             [struct-generator :refer [gen-rand-spec gen-struct-val]]))
