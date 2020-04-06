@@ -1,5 +1,5 @@
 (ns all-tests
-  (:require [tester.core :refer :all]
+  (:require [tst.core :refer :all]
             [deserializing_test]
             [serializing_test]
             [roundtrip_test]

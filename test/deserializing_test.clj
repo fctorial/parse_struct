@@ -1,6 +1,6 @@
 (ns deserializing_test
-  (:require [tester.core :refer :all]
-            [tester.predicates :refer :all]
+  (:require [tst.core :refer :all]
+            [tst.predicates :refer :all]
             [parse_struct.core :refer [deserialize type-size]]
             [test_utils :refer [read-dump]]
             [dump_defs :refer :all]))
