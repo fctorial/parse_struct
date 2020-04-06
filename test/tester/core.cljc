@@ -54,3 +54,6 @@
        (filter #(not= (:result (second %))
                       :OK))
        treefy-result))
+
+(defn combine-tests [ts]
+  (reduce #(merge-with merge %1 %2) ts))
