@@ -11,15 +11,15 @@
             (let [spec (gen-rand-spec {:max-array-len       (inc (rand-int 10))
                                        :max-struct-children (inc (rand-int 10))
                                        :max-depth           (inc (rand-int 3))})
-                  value (gen-struct-val spec)]
-              (is (= value (deserialize spec (serialize spec value)))
-                  (let [spec_file (str "test/data/failed_spec_" id ".edn")
-                        value_file (str "test/data/failed_value_" id ".edn")]
-                    (clojure.pprint/pprint spec (clojure.java.io/writer spec_file))
-                    (clojure.pprint/pprint value (clojure.java.io/writer value_file))
-                    (str "serialize-deserialize roundtrip failed for dump number: " id "\n"
-                         "spec saved to: " spec_file "\n"
-                         "value saved to: " value_file)))))))
+                  value (gen-struct-val spec)
+                  after (deserialize spec (serialize spec value))]
+              (if (= value after)
+                {:result :OK}
+                {:result :ERR
+                 :message "roundtrip test failed"
+                 :before value
+                 :after after
+                 :spec spec})))))
 
 (defn make-test-suite []
   (combine-tests (for [id (range 1000)]

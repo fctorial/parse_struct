@@ -11,7 +11,7 @@
                              [:g name8],
                              [:h name8]]})
 
-(def dump1_data {:a -10,
+(def dump1_data {:a -100,
                  :b 200,
                  :c -32000,
                  :d 33000,

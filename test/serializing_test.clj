@@ -4,8 +4,7 @@
             [dump_defs :refer :all]
             [parse_struct.serialize :refer [serialize]]
             [parse_struct.utils :refer [zip-colls]]
-            [test_utils :refer [read-dump]]
-            [pjstadig.humane-test-output :as hto]))
+            [test_utils :refer [read-dump]]))
 
 (defn make-test-suite []
   (combine-tests

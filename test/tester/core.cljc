@@ -20,12 +20,14 @@
   (into {} (for [[name body] ts]
              [name
               (if (= name :main)
-                (try
-                  (body)
-                  (catch #?(:clj  Throwable
-                            :cljs js/Object) e
-                    {:result :EXCEPTION
-                     :data   e}))
+                (assoc
+                  (try
+                    (body)
+                    (catch #?(:clj  Throwable
+                              :cljs js/Object) e
+                      {:result :EXCEPTION
+                       :data   e}))
+                  :context (:code (meta body)))
                 (run-test body))])))
 
 (defn -flatten-result [res]
@@ -54,6 +56,20 @@
        (filter #(not= (:result (second %))
                       :OK))
        treefy-result))
+
+(defn get-tests-with-result [res st]
+  (->> res
+       flatten-result
+       (filter #(= st (:result (second %))))
+       treefy-result))
+
+(defn summarize-result [res]
+  (let [flat (flatten-result res)
+        grouped (group-by #(get-in % [1 :result]) flat)]
+    {:total_tests (count flat)
+     :passed (count (grouped :OK))
+     :failed (count (grouped :ERR))
+     :errors (count (grouped :EXCEPTION))}))
 
 (defn combine-tests [ts]
   (reduce #(merge-with merge %1 %2) ts))
