@@ -1,7 +1,5 @@
 {:deps    {potemkin {:mvn/version "0.4.5"}}
  :aliases {:test       {:extra-paths ["test"]
-                        :extra-deps  {pjstadig/humane-test-output {:mvn/version "0.10.0"}
-                                      ring/ring {:mvn/version "1.8.0"}}
                         :main-opts   ["-m" "all-tests"]}
            :dump-server {:extra-paths ["test"]
                          :extra-deps {ring/ring {:mvn/version "1.8.0"}}
@@ -15,7 +13,6 @@
            :repl       {:extra-paths ["test"]
                         :extra-deps  {popen {:mvn/version "0.3.1"}
                                       criterium {:mvn/version "0.4.5"}
-                                      pjstadig/humane-test-output {:mvn/version "0.10.0"}
                                       ring/ring {:mvn/version "1.8.0"}}}
            :pack       {:extra-deps {pack/pack.alpha {:git/url "https://github.com/juxt/pack.alpha.git"
                                                       :sha     "c70740ffc10805f34836da2160fa1899601fac02"}}

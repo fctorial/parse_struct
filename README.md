@@ -86,7 +86,9 @@ Structs and arrays can be arbitrarily nested.
 
 You'll need to have `gcc` installed to run tests.
 
-```
+```sh
 clojure -A:test-setup
+clojure -A:dump-server
+# in other window
 clojure -A:test
 ```
