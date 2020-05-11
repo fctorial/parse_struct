@@ -1,6 +1,5 @@
 (ns serializing_test
   (:require [tst.core :refer :all]
-            [tst.predicates :refer :all]
             [dump_defs :refer :all]
             [parse_struct.serialize :refer [serialize]]
             [parse_struct.utils :refer [zip-colls]]

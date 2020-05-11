@@ -57,13 +57,33 @@
   [spec data]
   (int-parser spec data))
 
+(defmulti float-parser (fn [spec _] spec))
+
+(defmacro make-float-parser [_spec]
+  (let [spec (var-get (resolve _spec))
+        {bc :bytes endianness :endianness} spec
+        getter ({4 '.getFloat
+                 8 '.getDouble} bc)
+        endianness ({:little 'ByteOrder/LITTLE_ENDIAN
+                     :big    'ByteOrder/BIG_ENDIAN} endianness)
+        data-arg (gensym "data")
+        bb-var (gensym "bb")
+        res-var (gensym "num")
+        mname (symbol "float-parser")
+        us (symbol "_")]
+    `(defmethod ~mname ~_spec [~us ~data-arg]
+       (let [~bb-var (.order (ByteBuffer/wrap (byte-array (take-exactly ~bc ~data-arg))) ~endianness)
+             ~res-var (~getter ~bb-var)]
+         ~res-var))))
+
+(make-float-parser f32)
+(make-float-parser f32be)
+(make-float-parser f64)
+(make-float-parser f64be)
+
 (defmethod deserialize :float
-  [{bc :bytes} data]
-  (let [bb (.order (ByteBuffer/wrap (byte-array (take-exactly bc data))) ByteOrder/LITTLE_ENDIAN)]
-    (case bc
-      4 (.getFloat bb)
-      8 (.getDouble bb)
-      (throw (new IllegalArgumentException "Floats can have 4 or 8 bytes")))))
+  [spec data]
+  (float-parser spec data))
 
 (defmethod deserialize :string
   [{bc :bytes trim_nulls? :trim_nulls} data]

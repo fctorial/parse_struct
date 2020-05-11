@@ -1,6 +1,5 @@
 (ns deserializing_test
   (:require [tst.core :refer :all]
-            [tst.predicates :refer :all]
             [parse_struct.core :refer [deserialize type-size]]
             [test_utils :refer [read-dump]]
             [dump_defs :refer :all]))
@@ -14,5 +13,11 @@
                               dump_def (deref (ns-resolve 'dump_defs (symbol (str "dump" i "_def"))))
                               dump_data (deref (ns-resolve 'dump_defs (symbol (str "dump" i "_data"))))
                               parsed (deserialize dump_def bs)]
-                          (is (= dump_data parsed))))))))
+                          (if (= parsed dump_data)
+                            {:result :OK}
+                            {:result :ERR
+                             :message (str "deserializing dump " i " gives invalid result")
+                             :dump_def dump_def
+                             :expected dump_data
+                             :actual parsed})))))))
 

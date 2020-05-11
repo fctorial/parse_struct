@@ -98,6 +98,7 @@
   (if (zero? (rand-int 10))
     {:type       :string
      :bytes      (rand-int 20)
+     :encoding "UTF-8"
      :trim_nulls (zero? (rand-int 2))}
     (rand-nth num_prims)))
 
