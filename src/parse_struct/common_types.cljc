@@ -101,6 +101,6 @@
             :trim_nulls true})
 
 (defn padding [n]
-  {:type :padding
-   :bytes n})
+  [nil {:type  :padding
+        :bytes n}])
 

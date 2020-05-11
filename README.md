@@ -48,7 +48,7 @@ Parse C struct dumps in clojure.
 
 (deserialize {:type        :struct
               :definition [[:a ct/u32]
-                           [nil (ct/padding 2)]
+                           (ct/padding 2)
                            [:b ct/i32]
                            [:c {:type       :string
                                 :bytes      8

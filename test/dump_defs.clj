@@ -88,9 +88,9 @@
                  :c 128.0
                  :d (repeat 5 256.0)})
 
-(def dump9_def {:type :struct
+(def dump9_def {:type       :struct
                 :definition [[:a u16]
-                             [nil (padding 2)]
+                             (padding 2)
                              [:b i32]]})
 
 (def dump9_data {:a 40000
