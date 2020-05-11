@@ -98,7 +98,7 @@
   (if (zero? (rand-int 10))
     {:type       :string
      :bytes      (rand-int 20)
-     :encoding "UTF-8"
+     :encoding   (["UTF-8" "UTF-16" "ASCII"] (rand-int 3))
      :trim_nulls (zero? (rand-int 2))}
     (rand-nth num_prims)))
 
