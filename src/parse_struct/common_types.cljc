@@ -1,4 +1,4 @@
-(ns parse_struct.common-types)
+(ns parse_struct.common_types)
 
 (def i8 {:type   :int
          :bytes  1

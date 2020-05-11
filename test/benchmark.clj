@@ -1,6 +1,6 @@
 (ns benchmark
   (:require [parse_struct.core :refer [serialize deserialize]]
-            [parse_struct.common-types :refer :all]
+            [parse_struct.common_types :refer :all]
             [struct-generator :refer [gen-struct-val gen-rand-spec]]
             [criterium.core :as cr]))
 

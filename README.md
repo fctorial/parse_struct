@@ -51,17 +51,12 @@ Parse C struct dumps in clojure.
                            (ct/padding 2)
                            [:b ct/i32]
                            [:c {:type       :string
-                                :bytes      8
-                                :trim_nulls true}]]}
+                                :bytes      8}]]}
              byte-seq)
 ; a struct
 
 ; ct/padding can be used in struct defs
 ; when serializing, padding bytes are returned as 0
-
-; For strings:
-; :trim_nulls = true returns characters upto first null character,
-; :trim_nulls = false keeps them in string
 
 (serialize ct/u64 123456)
 ; serialize takes a spec of the same format, data which must conform to that spec (otherwise IllegalArgumentException)

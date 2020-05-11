@@ -1,5 +1,5 @@
 (ns struct-generator
-  (:require [parse_struct.common-types :refer :all]
+  (:require [parse_struct.common_types :refer :all]
             [parse_struct.utils :refer [pow type-size]]))
 
 (defn rand-range [s e]
@@ -55,14 +55,14 @@
                                       8 lu}}
                       :float  {4 f
                                8 d}
-                      :string {true  #(apply str (gen-name (rand-int %)))
-                               false #(pad-nulls (gen-name (rand-int %))
-                                                 %)}})
+                      :string #(apply str (gen-name (rand-int %)))})
 
 (defn gen-struct-val [spec]
   (case (spec :type)
     :int ((get-in prim-generators [:int (spec :signed) (spec :bytes)]))
-    :string ((get-in prim-generators [:string (spec :trim_nulls)]) (spec :bytes))
+    :string ((prim-generators :string) (case (spec :encoding)
+                                         "UTF-16" (Integer/divideUnsigned (spec :bytes) 3)
+                                         (spec :bytes)))
     :float ((get-in prim-generators [:float (spec :bytes)]))
     :array (for [_ (range (spec :len))]
              (gen-struct-val (spec :element)))
@@ -98,8 +98,7 @@
   (if (zero? (rand-int 10))
     {:type       :string
      :bytes      (rand-int 20)
-     :encoding   (["UTF-8" "UTF-16" "ASCII"] (rand-int 3))
-     :trim_nulls (zero? (rand-int 2))}
+     :encoding   (["UTF-8" "UTF-16" "ASCII"] (rand-int 3))}
     (rand-nth num_prims)))
 
 (defn gen-rand-array-spec [{max-len :max-array-len :as characteristics}]

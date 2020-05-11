@@ -1,6 +1,6 @@
 (ns parse_struct.serialize
   (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size]]
-            [parse_struct.common-types :refer :all])
+            [parse_struct.common_types :refer :all])
   (:import (io.netty.buffer Unpooled ByteBuf)))
 
 (defmulti int-writer (fn [spec _ _] spec))

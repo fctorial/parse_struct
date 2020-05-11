@@ -7,4 +7,4 @@
      ["3gdh3h2gqg" {:type :int, :bytes 8, :signed true, :endianness :big}]
      ["aneyosb93z" {:type :int, :bytes 1, :signed true, :endianness :big}]
      ["oy5iqicky8" {:type :int, :bytes 1, :signed false, :endianness :little}])}]
-  ["i7ivcwpzev" {:type :string, :bytes 2, :trim_nulls false}])}
+  ["i7ivcwpzev" {:type :string, :bytes 2, :encoding "UTF-8"}])}
