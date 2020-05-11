@@ -104,8 +104,8 @@
   (float-writer spec value bb))
 
 (defmethod _serialize :string
-  [{bc :bytes ^String encoding :encoding} ^String value ^ByteBuf bb]
-  (let [bs (.getBytes value encoding )]
+  [{bc :bytes} ^String value ^ByteBuf bb]
+  (let [bs (.getBytes value "ASCII")]
     (if (> (count bs) bc)
       (throw (new IllegalArgumentException (str "string: \"" value "\" is bigger than the allotted space (" bc " bytes)")))
       (do

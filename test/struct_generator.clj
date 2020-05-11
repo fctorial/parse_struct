@@ -42,9 +42,6 @@
 (defn uuid []
   (apply str (repeatedly 10 #(rand-nth "qwertyuiopasdghklzxcvbnm1234567890"))))
 
-(defn pad-nulls [s n]
-  (apply str (take n (concat s (repeat (char 0))))))
-
 (def prim-generators {:int    {true  {1 (i 8)
                                       2 (i 16)
                                       4 (i 32)
@@ -60,9 +57,7 @@
 (defn gen-struct-val [spec]
   (case (spec :type)
     :int ((get-in prim-generators [:int (spec :signed) (spec :bytes)]))
-    :string ((prim-generators :string) (case (spec :encoding)
-                                         "UTF-16" (Integer/divideUnsigned (spec :bytes) 3)
-                                         (spec :bytes)))
+    :string ((prim-generators :string) (spec :bytes))
     :float ((get-in prim-generators [:float (spec :bytes)]))
     :array (for [_ (range (spec :len))]
              (gen-struct-val (spec :element)))
@@ -98,7 +93,7 @@
   (if (zero? (rand-int 10))
     {:type       :string
      :bytes      (rand-int 20)
-     :encoding   (["UTF-8" "UTF-16" "ASCII"] (rand-int 3))}
+     :adapter    trim-nulls-end}
     (rand-nth num_prims)))
 
 (defn gen-rand-array-spec [{max-len :max-array-len :as characteristics}]

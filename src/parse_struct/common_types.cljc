@@ -100,3 +100,6 @@
   [nil {:type  :padding
         :bytes n}])
 
+(defn trim-nulls-end [s]
+  (.replaceAll s (str (char 0) "+$") ""))
+

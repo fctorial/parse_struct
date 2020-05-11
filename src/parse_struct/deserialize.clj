@@ -51,9 +51,13 @@
 (make-int-parser u32be)
 (make-int-parser u64be)
 
-(defmulti deserialize (fn [spec _] (spec :type)))
+(defmulti _deserialize (fn [spec _] (spec :type)))
 
-(defmethod deserialize :int
+(defn deserialize [{adapter :adapter :as spec} data]
+  ((or adapter
+       identity) (_deserialize spec data)))
+
+(defmethod _deserialize :int
   [spec data]
   (int-parser spec data))
 
@@ -81,15 +85,15 @@
 (make-float-parser f64)
 (make-float-parser f64be)
 
-(defmethod deserialize :float
+(defmethod _deserialize :float
   [spec data]
   (float-parser spec data))
 
-(defmethod deserialize :string
-  [{bc :bytes encoding :encoding} data]
-  (new String (byte-array (take-exactly bc data)) encoding))
+(defmethod _deserialize :string
+  [{bc :bytes} data]
+  (new String (byte-array (take-exactly bc data)) "ASCII"))
 
-(defmethod deserialize :array
+(defmethod _deserialize :array
   [{ed :element n :len} data]
   (map
     (partial deserialize ed)
@@ -98,7 +102,7 @@
                         (repeat n [])
                         (partition sz data))))))
 
-(defmethod deserialize :struct
+(defmethod _deserialize :struct
   [{definition :definition} data]
   (loop [res {}
          items_left definition
@@ -115,5 +119,5 @@
                (rest items_left)
                next_data_left)))))
 
-(defmethod deserialize :padding
+(defmethod _deserialize :padding
   [_ _])

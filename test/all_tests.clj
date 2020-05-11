@@ -5,7 +5,10 @@
             [roundtrip_test]
             [clojure.pprint :refer [pprint]]))
 
+(defn make-test-suite []
+  (combine-tests [(serializing_test/make-test-suite)
+                  (deserializing_test/make-test-suite)
+                  (roundtrip_test/make-test-suite)]))
+
 (defn -main []
-  (pprint (summarize-result (run-test (combine-tests [(serializing_test/make-test-suite)
-                                                      (deserializing_test/make-test-suite)
-                                                      (roundtrip_test/make-test-suite)])))))
+  (pprint (summarize-result (run-test (make-test-suite)))))

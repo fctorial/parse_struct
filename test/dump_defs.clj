@@ -1,9 +1,9 @@
 (ns dump_defs
   (:require [parse_struct.common_types :refer :all]))
 
-(def name8 {:type       :string
-            :bytes      8
-            :encoding "UTF-8"})
+(def name8 {:type    :string
+            :bytes   8
+            :adapter trim-nulls-end})
 
 (def dump1_def {:type       :struct
                 :definition [[:a i8]
@@ -33,8 +33,7 @@
 (def dump3_def {:type       :struct
                 :definition [[:a i32]
                              [:c {:type       :string
-                                  :bytes      6
-                                  :encoding "UTF-8"}]]})
+                                  :bytes      6}]]})
 
 (def dump3_data {:a 3000
                  :c "myname"})
@@ -59,8 +58,7 @@
                              [:b {:type       :struct
                                   :definition [[:a i32]
                                                [:c {:type       :string
-                                                    :bytes      6
-                                                    :encoding "UTF-8"}]]}]]})
+                                                    :bytes      6}]]}]]})
 
 (def dump6_data {:a -45
                  :b {:a 0
