@@ -14,5 +14,12 @@
                         (let [bs (seq (read-dump i))
                               dump_def (deref (ns-resolve 'dump_defs (symbol (str "dump" i "_def"))))
                               dump_data (deref (ns-resolve 'dump_defs (symbol (str "dump" i "_data"))))
-                              generated (serialize dump_def dump_data)]
-                          (is (= bs generated))))))))
+                              generated (seq (serialize dump_def dump_data))]
+                          (if (= bs generated)
+                            {:result :OK}
+                            {:result :ERR
+                             :message (str "serializing dump " i " gives invalid result")
+                             :dump_def dump_def
+                             :dump_data dump_data
+                             :expected bs
+                             :actual generated})))))))

@@ -96,10 +96,6 @@
             :bytes      8
             :endianness :little})
 
-(def name8 {:type       :string
-            :bytes      8
-            :trim_nulls true})
-
 (defn padding [n]
   [nil {:type  :padding
         :bytes n}])

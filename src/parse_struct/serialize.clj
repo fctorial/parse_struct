@@ -1,14 +1,14 @@
 (ns parse_struct.serialize
-  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls]]
+  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size]]
             [parse_struct.common-types :refer :all])
-  (:import (java.nio ByteBuffer ByteOrder)))
+  (:import (io.netty.buffer Unpooled ByteBuf)))
 
-(defmulti int-writer (fn [spec _] spec))
+(defmulti int-writer (fn [spec _ _] spec))
 
 (defmacro make-int-writer [_spec]
   (let [spec (var-get (resolve _spec))
-        size (spec :bytes)
-        min-range (if (spec :signed)
+        {size :bytes endianness :endianness signed :signed} spec
+        min-range (if signed
                     ({1 Byte/MIN_VALUE
                       2 Short/MIN_VALUE
                       4 Integer/MIN_VALUE
@@ -18,39 +18,39 @@
                            2 Short/MAX_VALUE
                            4 Integer/MAX_VALUE
                            8 Long/MAX_VALUE} size)
-        max-range (if (spec :signed)
+        max-range (if signed
                     signed-max-range
                     (dec (pow 2 (* 8 size))))
-        putter ({1 '.put
-                 2 '.putShort
-                 4 '.putInt
-                 8 '.putLong} size)
+        putter (get-in {:big    {1 '.writeByte
+                                 2 '.writeShort
+                                 4 '.writeInt
+                                 8 '.writeLong}
+                        :little {1 '.writeByte
+                                 2 '.writeShortLE
+                                 4 '.writeIntLE
+                                 8 '.writeLongLE}} [endianness size])
         caster ({1 byte
                  2 short
                  4 int
                  8 long} size)
-        endianness ({:little 'ByteOrder/LITTLE_ENDIAN
-                     :big    'ByteOrder/BIG_ENDIAN} (spec :endianness))
-        unsigned-offsetter (if (spec :signed)
+        unsigned-offsetter (if signed
                              'identity
                              (let [value-var (gensym)
                                    offset (pow 2 (* 8 size))]
                                `(fn [~value-var]
-                                 (if (> ~value-var ~signed-max-range)
-                                   (- ~value-var ~offset)
-                                   ~value-var))))
-        spec-arg (gensym)
-        value-arg (gensym)
-        bb-var (gensym)
+                                  (if (> ~value-var ~signed-max-range)
+                                    (- ~value-var ~offset)
+                                    ~value-var))))
+        spec-arg (gensym 1)
+        value-arg (gensym 2)
+        bb-arg (gensym 3)
         name (symbol "int-writer")]
     `(defmethod ~name ~spec
-       [~spec-arg ~value-arg]
+       [~spec-arg ~value-arg ~(with-meta bb-arg {:tag 'ByteBuf})]
        (if (not (<= ~min-range ~value-arg ~max-range))
          (throw (new IllegalArgumentException (str "number: " ~value-arg " is out of bounds for type " ~_spec)))
-         (let [~bb-var (ByteBuffer/allocate ~size)]
-           (.order ~bb-var ~endianness)
-           (~putter ~bb-var (~caster (~unsigned-offsetter ~value-arg)))
-           (.array ~bb-var))))))
+         (do
+           (~putter ~bb-arg (~caster (~unsigned-offsetter ~value-arg))))))))
 
 (make-int-writer i8)
 (make-int-writer i16)
@@ -70,52 +70,69 @@
 (make-int-writer u32be)
 (make-int-writer u64be)
 
-(defmulti serialize (fn [spec _] (spec :type)))
+(defmulti float-writer (fn [spec _ bb] spec))
 
-(defmethod serialize :int
-  [spec value]
-  (int-writer spec value))
+(defmacro make-float-writer [_spec]
+  (let [spec (var-get (resolve _spec))
+        {size :bytes endianness :endianness} spec
+        putter (get-in {:big    {4 '.writeFloat
+                                 8 '.writeDouble}
+                        :little {4 '.writeFloatLE
+                                 8 '.writeDoubleLE}} [endianness size])
+        caster ({4 float
+                 8 double} size)
+        spec-arg (gensym 1)
+        value-arg (gensym 2)
+        bb-arg (with-meta (gensym 3) {:tag ByteBuf})
+        name (symbol "float-writer")]
+    `(defmethod ~name ~spec
+       [~spec-arg ~value-arg ~(with-meta bb-arg {:tag 'ByteBuf})]
+       (~putter ~bb-arg (~caster ~value-arg)))))
 
-(defmacro make-float-writer [size]
-  (let [putter ({4 '.putFloat
-                 8 '.putDouble} size)
-        val-arg (gensym)
-        bb-var (gensym)]
-   `(fn [~val-arg]
-     (let [~bb-var (ByteBuffer/allocate ~size)]
-       (.order ~bb-var ByteOrder/LITTLE_ENDIAN)
-       (~putter ~bb-var ~val-arg)
-       (.array ~bb-var)))))
+(make-float-writer f32)
+(make-float-writer f32be)
+(make-float-writer f64)
+(make-float-writer f64be)
 
-(def float-writers {4 (make-float-writer 4)
-                    8 (make-float-writer 8)})
+(defmulti _serialize (fn [spec _ bb] (spec :type)))
 
-(defmethod serialize :float [{bc :bytes} value]
-  ((float-writers bc) value))
+(defmethod _serialize :int
+  [spec value bb]
+  (int-writer spec value bb))
 
-(defmethod serialize :string
-  [{bc :bytes} value]
-  (if (> (count value) bc)
-    (throw (new IllegalArgumentException (str "string: \"" value "\" is longer than the allotted space (" bc " bytes)")))
-    (if (not (every? #(<= 0 (int %) 127) value))
-      (throw (new IllegalArgumentException (str "string: \"" value "\" is not ascii")))
-      (concat (.getBytes value) (repeat (- bc (count value)) (byte 0))))))
+(defmethod _serialize :float [spec value bb]
+  (float-writer spec value bb))
 
-(defmethod serialize :struct
-  [{items :definition} value]
-  (if (not (= (set (map first
-                    (filter (fn [[_ spec]]
-                              (not= :padding (spec :type)))
-                            items)))
-              (set (keys value))))
-    (throw (new IllegalArgumentException value))
-    (apply concat (for [[name spec] items]
-                    (serialize spec (value name))))))
+(defmethod _serialize :string
+  [{bc :bytes ^String encoding :encoding} ^String value ^ByteBuf bb]
+  (let [bs (.getBytes value encoding )]
+    (if (> (count bs) bc)
+      (throw (new IllegalArgumentException (str "string: \"" value "\" is bigger than the allotted space (" bc " bytes)")))
+      (do
+        (.writeBytes bb bs)
+        (.writeBytes bb (byte-array (- bc (count value)) (byte 0)))))))
 
-(defmethod serialize :array
-  [{len :len element :element} value]
-  (apply concat (map #(serialize element %) (take-exactly len value))))
+(defmethod _serialize :struct
+  [{items :definition} value bb]
+  (if (not= (set (map first
+                      (filter (fn [[_ spec]]
+                                (not= :padding (spec :type)))
+                              items)))
+            (set (keys value)))
+    (throw (new IllegalArgumentException))
+    (doseq [[name spec] items]
+      (_serialize spec (value name) bb))))
 
-(defmethod serialize :padding
-  [{bc :bytes} _]
-  (repeat bc (byte 0)))
+(defmethod _serialize :array
+  [{len :len element :element} value bb]
+  (doseq [e (take-exactly len value)]
+    (_serialize element e bb)))
+
+(defmethod _serialize :padding
+  [{bc :bytes} _ ^ByteBuf bb]
+  (.writeBytes bb (byte-array bc)))
+
+(defn serialize [spec value]
+  (let [bb (Unpooled/buffer (type-size spec))]
+    (_serialize spec value bb)
+    (.array bb)))
