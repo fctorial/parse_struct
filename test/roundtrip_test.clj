@@ -22,5 +22,5 @@
                  :spec spec})))))
 
 (defn make-test-suite []
-  (combine-tests (for [id (range 1000)]
+  (combine-tests (for [id (range 10000)]
                    (unit-work id))))
