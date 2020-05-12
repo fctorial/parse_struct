@@ -1,5 +1,5 @@
 (ns parse_struct.serialize
-  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size]]
+  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size ascii]]
             [parse_struct.common_types :refer :all])
   (:import (io.netty.buffer Unpooled ByteBuf)))
 
@@ -105,7 +105,7 @@
 
 (defmethod _serialize :string
   [{bc :bytes} ^String value ^ByteBuf bb]
-  (let [bs (.getBytes value "ASCII")]
+  (let [bs (.getBytes value ascii)]
     (if (> (count bs) bc)
       (throw (new IllegalArgumentException (str "string: \"" value "\" is bigger than the allotted space (" bc " bytes)")))
       (do

@@ -1,5 +1,5 @@
 (ns parse_struct.deserialize
-  (:require [parse_struct.utils :refer [split-n take-exactly pow pows2 bitCount type-size zip-colls]]
+  (:require [parse_struct.utils :refer [split-n take-exactly pow pows2 bitCount type-size zip-colls ascii]]
             [parse_struct.common_types :refer :all]
             [clojure.spec.alpha :as s])
   (:import (java.nio ByteBuffer ByteOrder)))
@@ -91,7 +91,7 @@
 
 (defmethod _deserialize :string
   [{bc :bytes} data]
-  (new String (byte-array (take-exactly bc data)) "ASCII"))
+  (new String (byte-array (take-exactly bc data)) ascii))
 
 (defmethod _deserialize :array
   [{ed :element n :len} data]
