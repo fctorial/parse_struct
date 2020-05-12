@@ -33,8 +33,8 @@
 
 (def dump3_def {:type       :struct
                 :definition [[:a i32]
-                             [:c {:type       :string
-                                  :bytes      6}]]})
+                             [:c {:type  :string
+                                  :bytes 6}]]})
 
 (def dump3_data {:a 3000
                  :c "myname"})
@@ -58,17 +58,17 @@
                 :definition [[:a i32]
                              [:b {:type       :struct
                                   :definition [[:a i32]
-                                               [:c {:type       :string
-                                                    :bytes      6}]]}]]})
+                                               [:c {:type  :string
+                                                    :bytes 6}]]}]]})
 
 (def dump6_data {:a -45
                  :b {:a 0
                      :c (str "here" (new String (byte-array [0 0])))}})
 
-(def dump7_def {:type :struct
+(def dump7_def {:type       :struct
                 :definition [[:a u8]
-                             [:b {:type :array
-                                  :len 3
+                             [:b {:type    :array
+                                  :len     3
                                   :element dump3_def}]]})
 
 (def dump7_data {:a 200
@@ -99,8 +99,26 @@
 (def dump9_data {:a 40000
                  :b -40000})
 
-(def dump10_def {:type :array
-                 :len  20
+(def dump10_def {:type    :array
+                 :len     20
                  :element dump9_def})
 
 (def dump10_data (repeat 20 dump9_data))
+
+; only for deserialization and :adapter
+(def dump11_def {:type    :array
+                 :len     5
+                 :element (assoc i16 :adapter (fn [x] (if (> x 0)
+                                                        x (* -1 x))))})
+
+(def dump11_data [12,
+                  15,
+                  4745,
+                  434,
+                  23455])
+
+(def dump12_def {:type  :string
+                 :bytes 15
+                 :adapter #(Double/parseDouble %)})
+
+(def dump12_data -23.55509)

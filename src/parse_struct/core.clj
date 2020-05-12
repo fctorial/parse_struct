@@ -1,10 +1,10 @@
 (ns parse_struct.core
-  (:require [parse_struct.serialize]
-            [parse_struct.deserialize]
-            [parse_struct.utils]
+  (:require [parse_struct.serialize :as s]
+            [parse_struct.deserialize :as d]
+            [parse_struct.utils :as u]
             [potemkin :refer [import-vars]]))
 
-(import-vars [parse_struct.serialize serialize]
-             [parse_struct.deserialize deserialize]
-             [parse_struct.utils type-size trim-nulls-end])
+(import-vars [s serialize]
+             [d deserialize]
+             [u type-size trim-nulls-end])
 

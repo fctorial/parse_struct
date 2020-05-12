@@ -53,8 +53,8 @@
 
 (defmulti _deserialize (fn [spec _] (spec :type)))
 
-(defn deserialize [{adapter :adapter :as spec} data]
-  ((or adapter
+(defn deserialize [spec data]
+  ((or (spec :adapter)
        identity) (_deserialize spec data)))
 
 (defmethod _deserialize :int

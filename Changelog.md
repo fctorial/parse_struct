@@ -6,8 +6,6 @@
 
 * Change in usage of `common_types/padding`. Now it should be used like this
 
-* Added optional `:adapter` attribute
-
 ```clj
 (deserialize {:type        :struct
               :definition [...
@@ -25,5 +23,9 @@ instead of
                            ...]}
              byte-seq)
 ```
+
+* Added new `:bytes` type
+
+* Added optional `:adapter` attribute
 
 * `:trim_nulls` for strings has been removed, use `:adapter` and `trim-nulls-end` instead

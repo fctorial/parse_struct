@@ -1,7 +1,7 @@
 (ns parse_struct.utils
   (:import (java.nio.charset Charset)))
 
-(def ascii (Charset/forName "US-ASCII"))
+(def ^Charset ascii (Charset/forName "US-ASCII"))
 
 (defn split-n [n coll]
   (loop [fst (transient [])
@@ -29,7 +29,8 @@
       (throw (new Exception "seq doesn't have enough members"))
       (lazy-seq (cons (first coll)
                      (take-exactly (dec n)
-                                   (rest coll)))))))
+                                   (rest coll)))))
+    []))
 
 (def pows2 {8 256
             16 65536

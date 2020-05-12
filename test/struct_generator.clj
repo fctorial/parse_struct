@@ -90,15 +90,18 @@
 (declare gen-rand-spec)
 
 (defn gen-rand-prim-spec [_]
-  (if (zero? (rand-int 10))
-    {:type       :string
-     :bytes      (rand-int 20)
-     :adapter    trim-nulls-end}
-    (rand-nth num_prims)))
+  (let [n (rand-int 10)]
+    (cond
+      (zero? n) {:type       :string
+                 :bytes      (rand-int 20)
+                 :adapter    trim-nulls-end}
+      :else (rand-nth num_prims))))
 
 (defn gen-rand-array-spec [{max-len :max-array-len :as characteristics}]
   {:type    :array
    :len     (rand-int max-len)
+   :adapter (if (zero? (rand-int 2))
+              vec identity)
    :element (gen-rand-spec (update characteristics :max-depth dec))})
 
 (defn gen-rand-struct-spec [{max-children :max-struct-children :as characteristics}]

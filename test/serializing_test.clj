@@ -7,7 +7,7 @@
 
 (defn make-test-suite []
   (combine-tests
-    (for [i (range 1 11)]
+    (for [i (map inc (range 10))]
       (testing :serialization
                (testing (keyword (str "dump_" i))
                         (let [bs (seq (read-dump i))

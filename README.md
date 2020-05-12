@@ -60,7 +60,6 @@ See wiki for full documentation.
 
 ### TODO:
 
-* More tests for new features
 * support cljs
 * Lazy serializer and tests
 * Abstracted tests

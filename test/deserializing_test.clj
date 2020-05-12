@@ -6,7 +6,7 @@
 
 (defn make-test-suite []
   (combine-tests
-    (for [i (range 1 11)]
+    (for [i (map inc (range 12))]
       (testing :deserialization
                (testing (keyword (str "dump_" i))
                         (let [bs (read-dump i)
