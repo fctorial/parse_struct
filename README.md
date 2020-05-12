@@ -62,6 +62,9 @@ See wiki for full documentation.
 
 * More tests for new features
 * support cljs
+* Lazy serializer and tests
+* Abstracted tests
+* :bytes
 
 ### Tests:
 
