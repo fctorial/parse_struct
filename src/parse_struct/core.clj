@@ -6,4 +6,5 @@
 
 (import-vars [parse_struct.serialize serialize]
              [parse_struct.deserialize deserialize]
-             [parse_struct.utils type-size])
+             [parse_struct.utils type-size trim-nulls-end])
+

@@ -1,6 +1,10 @@
 ## v8.0
 
-Change in usage of `common_types/padding`. Now it should be used like this
+* `common-types` has been renamed to `common_types`
+
+* `serialize` now uses ByteBuf and returns a single byte array, instead of a `concat` of smaller byte arrays. Multifold performance improvement.
+
+* Change in usage of `common_types/padding`. Now it should be used like this
 
 ```clj
 (deserialize {:type        :struct
@@ -19,3 +23,5 @@ instead of
                            ...]}
              byte-seq)
 ```
+
+* `:trim_nulls` for strings has been removed, use `:adapter` and `trim-nulls-end` instead

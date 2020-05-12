@@ -3,8 +3,8 @@
            (java.net URI)
            (java.net.http HttpRequest HttpClient HttpResponse HttpResponse$BodyHandler HttpResponse$BodyHandlers)))
 
-(def ^:private client (-> (HttpClient/newBuilder)
-                          (.build)))
+(def ^HttpClient client (-> (HttpClient/newBuilder)
+                            (.build)))
 
 (defn read-dump [num]
   (let [uri (URI/create (str "http://localhost:3000/" num))

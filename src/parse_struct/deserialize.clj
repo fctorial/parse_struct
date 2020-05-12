@@ -59,7 +59,7 @@
 
 (defmethod _deserialize :int
   [spec data]
-  (int-parser spec data))
+  (int-parser (dissoc spec :adapter) data))
 
 (defmulti float-parser (fn [spec _] spec))
 
@@ -87,7 +87,7 @@
 
 (defmethod _deserialize :float
   [spec data]
-  (float-parser spec data))
+  (float-parser (dissoc spec :adapter) data))
 
 (defmethod _deserialize :string
   [{bc :bytes} data]

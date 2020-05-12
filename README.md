@@ -8,32 +8,32 @@ Parse C struct dumps in clojure.
 
 #### Leiningen/Boot
 
-    [fctorial/parse_struct "0.7.2"]
+    [fctorial/parse_struct "0.8.0"]
 
 #### Clojure CLI/deps.edn
 
-    fctorial/parse_struct {:mvn/version "0.7.2"}
+    fctorial/parse_struct {:mvn/version "0.8.0"}
 
 #### Gradle
 
-    compile 'fctorial:parse_struct:0.7.2'
+    compile 'fctorial:parse_struct:0.8.0'
 
 #### Maven
 
-```
+```xml
 <dependency>
   <groupId>fctorial</groupId>
   <artifactId>parse_struct</artifactId>
-  <version>0.7.2</version>
+  <version>0.8.0</version>
 </dependency>
 ```
 
-## Usage:
+## Examples
 
 ```clojure
 (ns examples
   (:require [parse_struct.core :refer [serialize deserialize type-size]]
-            [parse_struct.common-types :as ct]))
+            [parse_struct.common_types :as ct]))
 
 (declare byte-seq)
 
@@ -54,27 +54,13 @@ Parse C struct dumps in clojure.
                                 :bytes      8}]]}
              byte-seq)
 ; a struct
-
-; ct/padding can be used in struct defs
-; when serializing, padding bytes are returned as 0
-
-(serialize ct/u64 123456)
-; serialize takes a spec of the same format, data which must conform to that spec (otherwise IllegalArgumentException)
-; and returns a seq of bytes
-
-(type-size {:type    :array
-            :len     12
-            :element {:type       :struct
-                      :definition [[:a  ct/i32]
-                                   [:b  ct/i16]]}})
-; type-size gives the byte count of a spec
 ```
 
-Structs and arrays can be arbitrarily nested.
+See wiki for full documentation.
 
 ### TODO:
 
-* More tests for big endian
+* More tests for new features
 * support cljs
 
 ### Tests:

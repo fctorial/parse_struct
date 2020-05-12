@@ -52,6 +52,9 @@
     :struct (reduce + (map type-size (map second (sd :definition))))
     (sd :bytes)))
 
+(defn trim-nulls-end [^String s]
+  (.replaceAll s (str (char 0) "+$") ""))
+
 (defn in-range [l n u]
   (and (<= l n)
        (< n u)))

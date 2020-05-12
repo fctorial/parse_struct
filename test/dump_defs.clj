@@ -1,5 +1,6 @@
 (ns dump_defs
-  (:require [parse_struct.common_types :refer :all]))
+  (:require [parse_struct.common_types :refer :all]
+            [parse_struct.core :refer [trim-nulls-end]]))
 
 (def name8 {:type    :string
             :bytes   8

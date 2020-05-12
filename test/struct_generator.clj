@@ -1,6 +1,6 @@
 (ns struct-generator
   (:require [parse_struct.common_types :refer :all]
-            [parse_struct.utils :refer [pow type-size]]))
+            [parse_struct.utils :refer [pow type-size trim-nulls-end]]))
 
 (defn rand-range [s e]
   (+ (long (rand (- e s))) s))

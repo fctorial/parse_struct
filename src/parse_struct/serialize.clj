@@ -94,14 +94,14 @@
 (make-float-writer f64)
 (make-float-writer f64be)
 
-(defmulti _serialize (fn [spec _ bb] (spec :type)))
+(defmulti _serialize (fn [spec _ _] (spec :type)))
 
 (defmethod _serialize :int
   [spec value bb]
-  (int-writer spec value bb))
+  (int-writer (dissoc spec :adapter) value bb))
 
 (defmethod _serialize :float [spec value bb]
-  (float-writer spec value bb))
+  (float-writer (dissoc spec :adapter) value bb))
 
 (defmethod _serialize :string
   [{bc :bytes} ^String value ^ByteBuf bb]
