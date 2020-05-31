@@ -1,5 +1,3 @@
-(set! *warn-on-reflection* true)
-
 (ns all-tests
   (:require [tst.core :refer :all]
             [deserializing_test]

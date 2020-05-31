@@ -7,16 +7,18 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/test/data" />
     </content>
+    <content url="file://$MODULE_DIR$/../tst/src">
+      <sourceFolder url="file://$MODULE_DIR$/../tst/src" isTestSource="false" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Deps: org.clojure/clojure:1.10.1" level="project" />
-    <orderEntry type="library" name="Deps: org.clojure/core.specs.alpha:0.2.44" level="project" />
-    <orderEntry type="library" name="Deps: io.netty/netty-common:4.1.30.Final" level="project" />
-    <orderEntry type="library" name="Deps: org.clojure/spec.alpha:0.2.176" level="project" />
-    <orderEntry type="library" name="Deps: fctorial/tst:0.3.1" level="project" />
+    <orderEntry type="library" name="Deps: potemkin:0.4.5" level="project" />
     <orderEntry type="library" name="Deps: io.netty/netty-buffer:4.1.30.Final" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/spec.alpha:0.2.176" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/core.specs.alpha:0.2.44" level="project" />
     <orderEntry type="library" name="Deps: clj-tuple:0.2.2" level="project" />
     <orderEntry type="library" name="Deps: riddley:0.1.12" level="project" />
-    <orderEntry type="library" name="Deps: potemkin:0.4.5" level="project" />
+    <orderEntry type="library" name="Deps: io.netty/netty-common:4.1.30.Final" level="project" />
   </component>
 </module>

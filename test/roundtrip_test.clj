@@ -7,22 +7,18 @@
 
 (defn unit-work [id]
   (testing :roundtrip
-   (testing (keyword (str id))
-            (let [spec (gen-rand-spec {:max-array-len       (inc (rand-int 10))
-                                       :max-struct-children (inc (rand-int 10))
-                                       :max-depth           (inc (rand-int 3))})
-                  value (gen-struct-val spec)
-                  after (deserialize spec (serialize spec value))
-                  d (diff value after)]
-              (if (and (nil? (first d))
-                       (nil? (second d)))
-                {:result :OK}
-                {:result :ERR
-                 :message "roundtrip test failed"
-                 :before value
-                 :after after
-                 :diff d
-                 :spec spec})))))
+   (testing (keyword (str id)) [spec value after d]
+            (reset! spec (gen-rand-spec {:max-array-len       (inc (rand-int 10))
+                                         :max-struct-children (inc (rand-int 10))
+                                         :max-depth           (inc (rand-int 3))}))
+            (reset! value (gen-struct-val @spec))
+            (reset! after (deserialize @spec (serialize @spec @value)))
+            (reset! d (diff @value @after))
+            (if (and (nil? (first @d))
+                     (nil? (second @d)))
+              {:result :OK}
+              {:result  :ERR
+               :message "roundtrip test failed"}))))
 
 (defn make-test-suite []
   (combine-tests (for [id (range 10000)]
