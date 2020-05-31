@@ -26,7 +26,7 @@
 (defn take-exactly [n coll]
   (if (pos-int? n)
     (if (empty? coll)
-      (throw (new Exception "seq doesn't have enough members"))
+      (throw (new IndexOutOfBoundsException "seq doesn't have enough members"))
       (lazy-seq (cons (first coll)
                      (take-exactly (dec n)
                                    (rest coll)))))

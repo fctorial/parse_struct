@@ -7,6 +7,7 @@
 
 (defn make-test-suite []
   (combine-tests [(serializing_test/make-test-suite)
+                  (lazy_serializing_test/make-test-suite)
                   (deserializing_test/make-test-suite)
                   (roundtrip_test/make-test-suite)]))
 
