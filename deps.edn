@@ -1,8 +1,8 @@
 {:deps    {potemkin               {:mvn/version "0.4.5"}
            io.netty/netty-buffer  {:mvn/version "4.1.30.Final"}}
- :paths   ["src" "../tst/src"]
+ ; :paths   ["src" "../tst/src"]
  :aliases {:test        {:extra-paths ["test"]
-                         ;:extra-deps  {fctorial/tst {:mvn/version "0.3.1"}}
+                         :extra-deps  {fctorial/tst {:mvn/version "0.5.0"}}
                          :main-opts   ["-m" "all-tests"]}
            :dump-server {:extra-paths ["test"]
                          :extra-deps  {ring/ring {:mvn/version "1.8.0"}}
@@ -19,5 +19,5 @@
                                        criterium              {:mvn/version "0.4.5"}
                                        ring/ring              {:mvn/version "1.8.0"}
                                        org.clojure/core.async {:mvn/version "1.2.603"}
-                                       ;fctorial/tst          {:mvn/version "0.3.1"}
+                                       fctorial/tst           {:mvn/version "0.5.0"}
                                        io.netty/netty-buffer  {:mvn/version "4.1.30.Final"}}}}}

@@ -6,9 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <content url="file://$MODULE_DIR$/../tst/src">
-      <sourceFolder url="file://$MODULE_DIR$/../tst/src" isTestSource="false" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Deps: org.clojure/clojure:1.10.1" level="project" />
@@ -23,6 +20,7 @@
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-http:9.4.22.v20191022" level="project" />
     <orderEntry type="library" name="Deps: org.eclipse.jetty/jetty-util:9.4.22.v20191022" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/tools.analyzer.jvm:1.0.0" level="project" />
+    <orderEntry type="library" name="Deps: fctorial/tst:0.5.0" level="project" />
     <orderEntry type="library" name="Deps: io.netty/netty-buffer:4.1.30.Final" level="project" />
     <orderEntry type="library" name="Deps: ring/ring-jetty-adapter:1.8.0" level="project" />
     <orderEntry type="library" name="Deps: commons-io:2.6" level="project" />

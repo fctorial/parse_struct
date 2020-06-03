@@ -2,6 +2,7 @@
   (:require [tst.core :refer :all]
             [deserializing_test]
             [serializing_test]
+            [lazy_serializing_test]
             [roundtrip_test]
             [clojure.pprint :refer [pprint]]))
 
