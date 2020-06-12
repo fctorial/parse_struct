@@ -1,7 +1,8 @@
 (ns parse_struct.serialize
-  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size ascii]]
+  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size]]
             [parse_struct.common_types :refer :all])
-  (:import (io.netty.buffer Unpooled ByteBuf)))
+  (:import (io.netty.buffer Unpooled ByteBuf)
+           (java.nio.charset Charset)))
 
 (defmulti int-writer (fn [spec _ _] spec))
 
@@ -103,6 +104,7 @@
 (defmethod _serialize :float [spec value bb]
   (float-writer (dissoc spec :adapter) value bb))
 
+(def ^Charset ascii (Charset/forName "US-ASCII"))
 (defmethod _serialize :string
   [{bc :bytes} ^String value ^ByteBuf bb]
   (let [bs (.getBytes value ascii)]

@@ -1,5 +1,5 @@
-{:deps    {potemkin               {:mvn/version "0.4.5"}
-           io.netty/netty-buffer  {:mvn/version "4.1.30.Final"}}
+{:deps    {potemkin              {:mvn/version "0.4.5"}
+           io.netty/netty-buffer {:mvn/version "4.1.30.Final"}}
  ; :paths   ["src" "../tst/src"]
  :aliases {:test        {:extra-paths ["test"]
                          :extra-deps  {fctorial/tst {:mvn/version "0.5.0"}}
@@ -14,10 +14,11 @@
                          :extra-deps  {criterium {:mvn/version "0.4.5"}}
                          :main-opts   ["-m" "benchmark"]}
            :repl        {:extra-paths ["test"]
-                         :extra-deps  {popen                  {:mvn/version "0.3.1"}
-                                       nrepl/nrepl            {:mvn/version "0.8.0-SNAPSHOT"}
-                                       criterium              {:mvn/version "0.4.5"}
-                                       ring/ring              {:mvn/version "1.8.0"}
-                                       org.clojure/core.async {:mvn/version "1.2.603"}
-                                       fctorial/tst           {:mvn/version "0.5.0"}
-                                       io.netty/netty-buffer  {:mvn/version "4.1.30.Final"}}}}}
+                         :extra-deps  {popen                     {:mvn/version "0.3.1"}
+                                       org.clojure/clojurescript {:mvn/version "1.10.773"}
+                                       nrepl/nrepl               {:mvn/version "0.8.0-SNAPSHOT"}
+                                       criterium                 {:mvn/version "0.4.5"}
+                                       ring/ring                 {:mvn/version "1.8.0"}
+                                       org.clojure/core.async    {:mvn/version "1.2.603"}
+                                       fctorial/tst              {:mvn/version "0.5.0"}
+                                       io.netty/netty-buffer     {:mvn/version "4.1.30.Final"}}}}}

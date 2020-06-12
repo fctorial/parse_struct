@@ -1,7 +1,4 @@
-(ns parse_struct.utils
-  (:import (java.nio.charset Charset)))
-
-(def ^Charset ascii (Charset/forName "US-ASCII"))
+(ns parse_struct.utils)
 
 (defn split-n [n coll]
   (loop [fst (transient [])

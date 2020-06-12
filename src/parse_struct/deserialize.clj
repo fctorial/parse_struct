@@ -1,8 +1,8 @@
 (ns parse_struct.deserialize
-  (:require [parse_struct.utils :refer [split-n take-exactly pow pows2 bitCount type-size zip-colls ascii]]
-            [parse_struct.common_types :refer :all]
-            [clojure.spec.alpha :as s])
-  (:import (java.nio ByteBuffer ByteOrder)))
+  (:require [parse_struct.utils :refer [split-n take-exactly pow pows2 bitCount type-size zip-colls]]
+            [parse_struct.common_types :refer :all])
+  (:import (io.netty.buffer Unpooled ByteBuf)
+           (java.nio.charset Charset)))
 
 (defmulti int-parser (fn [spec _] spec))
 
@@ -11,12 +11,14 @@
         bc (spec :bytes)
         signed? (spec :signed)
         bits (* bc 8)
-        getter ({8  '.get
-                 16 '.getShort
-                 32 '.getInt
-                 64 '.getLong} bits)
-        endianness ({:little 'ByteOrder/LITTLE_ENDIAN
-                     :big    'ByteOrder/BIG_ENDIAN} (spec :endianness))
+        getter (get-in {:little {1 '.getByte
+                                 2 '.getShortLE
+                                 4 '.getIntLE
+                                 8 '.getLongLE}
+                        :big    {1 '.getByte
+                                 2 '.getShort
+                                 4 '.getInt
+                                 8 '.getLong}} [(spec :endianness) bc])
         offset (pow 2 bits)
         data-arg (gensym "data")
         bb-var (gensym "bb")
@@ -29,8 +31,8 @@
         mname (symbol "int-parser")
         us (symbol "_")]
     `(defmethod ~mname ~_spec [~us ~data-arg]
-       (let [~bb-var (.order (ByteBuffer/wrap (byte-array (take-exactly ~bc ~data-arg))) ~endianness)
-             ~num-var (~getter ~bb-var)]
+       (let [~bb-var (Unpooled/wrappedBuffer (byte-array (take-exactly ~bc ~data-arg)))
+             ~num-var (~getter ~bb-var 0)]
          ~sign-handler-exp))))
 
 (make-int-parser i8)
@@ -66,18 +68,18 @@
 (defmacro make-float-parser [_spec]
   (let [spec (var-get (resolve _spec))
         {bc :bytes endianness :endianness} spec
-        getter ({4 '.getFloat
-                 8 '.getDouble} bc)
-        endianness ({:little 'ByteOrder/LITTLE_ENDIAN
-                     :big    'ByteOrder/BIG_ENDIAN} endianness)
+        getter (get-in {:big    {4 '.getFloat
+                                 8 '.getDouble}
+                        :little {4 '.getFloatLE
+                                 8 '.getDoubleLE}} [endianness bc])
         data-arg (gensym "data")
         bb-var (gensym "bb")
         res-var (gensym "num")
         mname (symbol "float-parser")
         us (symbol "_")]
     `(defmethod ~mname ~_spec [~us ~data-arg]
-       (let [~bb-var (.order (ByteBuffer/wrap (byte-array (take-exactly ~bc ~data-arg))) ~endianness)
-             ~res-var (~getter ~bb-var)]
+       (let [~bb-var (Unpooled/wrappedBuffer (byte-array (take-exactly ~bc ~data-arg)))
+             ~res-var (~getter ~bb-var 0)]
          ~res-var))))
 
 (make-float-parser f32)
@@ -89,6 +91,7 @@
   [spec data]
   (float-parser (dissoc spec :adapter) data))
 
+(def ^Charset ascii (Charset/forName "US-ASCII"))
 (defmethod _deserialize :string
   [{bc :bytes} data]
   (new String (byte-array (take-exactly bc data)) ascii))

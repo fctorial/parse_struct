@@ -1,7 +1,8 @@
 (ns parse_struct.serialize_lazy
-  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size ascii]]
+  (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size]]
             [parse_struct.common_types :refer :all])
-  (:import (io.netty.buffer Unpooled ByteBuf)))
+  (:import (io.netty.buffer Unpooled ByteBuf)
+           (java.nio.charset Charset)))
 
 (defmulti serialize-lazy (fn [spec _] (spec :type)))
 
@@ -25,6 +26,7 @@
   [{bc :bytes} _]
   (repeat bc b0))
 
+(def ^Charset ascii (Charset/forName "US-ASCII"))
 (defmethod serialize-lazy :string
   [{bc :bytes} ^String value]
   (let [bs (.getBytes value ascii)

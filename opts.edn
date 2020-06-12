@@ -1,0 +1,5 @@
+{:output-dir    "out"
+ :optimizations :none
+ :main          "usage"
+ :target        :nodejs
+ :language-out  :es6}
