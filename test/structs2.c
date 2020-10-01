@@ -15,7 +15,7 @@ typedef float f32;
 typedef double f64;
 
 void write_to_file(void* s, int size, char* fl) {
-    int fd = open(fl, O_WRONLY | O_CREAT);
+    int fd = open(fl, O_WRONLY | O_CREAT, 0777);
     write(fd, s, size);
     close(fd);
     chmod(fl, S_IRUSR | S_IWUSR);
