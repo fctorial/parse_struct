@@ -1,6 +1,7 @@
 # parse_struct
 
-Parse C struct dumps in clojure.
+Serialize/Deserialize binary data in clojure with an api similar
+to pointer casting in `C`.
 
 [![Clojars Project](https://img.shields.io/clojars/v/fctorial/parse_struct.svg)](https://clojars.org/fctorial/parse_struct)
 
@@ -61,9 +62,8 @@ See wiki for full documentation.
 ### TODO:
 
 * support cljs
-* Lazy serializer and tests
-* Abstracted tests
-* :bytes
+* eager deserializer and tests
+* abstracted tests
 
 ### Tests:
 
