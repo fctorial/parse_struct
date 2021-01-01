@@ -59,6 +59,8 @@ to pointer casting in `C`.
 
 See wiki for full documentation.
 
+See [this repo](https://github.com/fctorial/bin_play) for examples that parse various file formats (`elf`, `zbi`, `multiboot`).
+
 ### TODO:
 
 * support cljs
