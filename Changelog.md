@@ -2,6 +2,8 @@
 
 * Struct deserialization now returns a map with keys in the same order as struct entries (for upto 64 entries).
 
+* Serialization returns an `ROVec` instead of a byte array.
+
 ## v0.8.0
 
 * `common-types` has been renamed to `common_types`

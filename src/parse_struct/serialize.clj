@@ -2,7 +2,8 @@
   (:require [parse_struct.utils :refer [split-n take-exactly pows2 bitCount pow in-range zip-colls type-size]]
             [parse_struct.common_types :refer [i8 i16 i32 i64 u8 u16 u32 u64 i8be i16be i32be i64be u8be u16be u32be u64be f32 f32be f64 f64be]])
   (:import (io.netty.buffer Unpooled ByteBuf)
-           (java.nio.charset Charset)))
+           (java.nio.charset Charset)
+           (clojure.lang ROVec)))
 
 (defmulti int-writer (fn [spec _ _] spec))
 
@@ -137,4 +138,4 @@
 (defn serialize [spec value]
   (let [bb (Unpooled/buffer (type-size spec))]
     (_serialize spec value bb)
-    (.array bb)))
+    (ROVec. (.array bb))))
