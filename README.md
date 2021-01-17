@@ -67,7 +67,11 @@ See [this repo](https://github.com/fctorial/bin_play) for examples that parse va
 * eager deserializer and tests
 * abstracted tests
 
-### Tests:
+### Development:
+
+You'll have to run this command to compile java classes:
+
+    javac -cp $(cat .cpcache/$(ls .cpcache/*.cp | head -n 1)) src/clojure/lang/* -d classes
 
 You'll need to have `gcc` installed to run tests.
 
