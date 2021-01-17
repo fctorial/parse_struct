@@ -2,7 +2,8 @@
   (:require [parse_struct.utils :refer [split-n take-exactly pow pows2 bitCount type-size zip-colls]]
             [parse_struct.common_types :refer [i8 i16 i32 i64 u8 u16 u32 u64 i8be i16be i32be i64be u8be u16be u32be u64be f32 f32be f64 f64be]])
   (:import (io.netty.buffer Unpooled ByteBuf)
-           (java.nio.charset Charset)))
+           (java.nio.charset Charset)
+           (clojure.lang MMap)))
 
 (defmulti int-parser (fn [spec _] spec))
 
@@ -107,7 +108,7 @@
 
 (defmethod _deserialize :struct
   [{definition :definition} data]
-  (loop [res {}
+  (loop [res MMap/EMPTY
          items_left definition
          data_left data]
     (if (empty? items_left)

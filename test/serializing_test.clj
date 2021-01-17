@@ -1,5 +1,5 @@
 (ns serializing_test
-  (:require [tst.core :refer [combine-tests]]
+  (:require [tst.core :refer [testing combine-tests]]
             [dump_defs :refer :all]
             [parse_struct.serialize :refer [serialize]]
             [parse_struct.utils :refer [zip-colls]]

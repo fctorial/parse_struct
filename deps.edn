@@ -13,7 +13,7 @@
            :bench       {:extra-paths ["test"]
                          :extra-deps  {criterium {:mvn/version "0.4.5"}}
                          :main-opts   ["-m" "benchmark"]}
-           :repl        {:extra-paths ["test"]
+           :repl        {:extra-paths ["test", "classes"]
                          :extra-deps  {popen                     {:mvn/version "0.3.1"}
                                        org.clojure/clojurescript {:mvn/version "1.10.773"}
                                        nrepl/nrepl               {:mvn/version "0.8.0-SNAPSHOT"}
